@@ -52,13 +52,10 @@
             <!-- ============================================================== -->
             <div class="main-content">
 
-                <div class="page-content {{ request()->is('/') ? 'p-0' : '' }}">
+                <div class="page-content">
                     @yield('main-search')
 
-                    <div class="container-fluid" @if (request()->is('/'))
-                        style=" padding: 0px !important; margin: 0px !important; width: 100% !important; max-width: 100% !important; padding-bottom: 100px !important;"
-                        @endif
-                        >
+                    <div class="container-fluid">
                         @yield('content')
                     </div>
                     <!-- container-fluid -->
@@ -70,43 +67,9 @@
                 <!-- Footer start -->
                 <footer class="landing-footer">
                     <div class="container-fluid">
-
-                        <div class="row">
-                            <div class="col-lg-3 col-sm-6">
-                                <div class="mb-4 mb-lg-0">
-                                    <h5 class="mb-3 footer-list-title">Company</h5>
-                                    <ul class="list-unstyled footer-list-menu">
-                                        <li><a href="#">About us</a></li>
-                                        <li><a href="#">Contact us</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-3 col-sm-6">
-                                <div class="mb-4 mb-lg-0">
-                                    <h5 class="mb-3 footer-list-title">Head Office</h5>
-                                    <div class="blog-post">
-                                        <a href="#" class="post">
-                                            <i class="fa-solid fa-location-pin"></i> Faislabad
-                                        </a>
-                                        <a href="#" class="post">
-                                            <i class="fa-solid fa-phone"></i> + 92 300 1234567
-                                        </a>
-                                        <a href="#" class="post">
-                                            <i class="fa-solid fa-envelope"></i> abc@example.com
-                                        </a>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end row -->
-
-                        <hr>
-
                         <div class="row">
                             <div class="col-lg-6">
-                                <p class="mb-2">2022 © Overseaszameen. All Rights Reserved</p>
+                                <p class="mb-2">2022 © Lead Generation System. All Rights Reserved</p>
                             </div>
 
                         </div>

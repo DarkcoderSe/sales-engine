@@ -15,15 +15,6 @@
 
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}" defer></script>
-
-        <style>
-            .bg-red {
-                background-color: red;
-                padding: 5px;
-                color: #fff;
-                border-radius: 10px;
-            }
-        </style>
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
