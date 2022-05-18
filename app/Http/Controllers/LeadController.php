@@ -11,8 +11,12 @@ use App\Models\Technology;
 
 use Toastr;
 
+use App\Traits\Organization;
+
 class LeadController extends Controller
 {
+    use Organization;
+
     public function index()
     {
         return view('lead.index');
@@ -53,6 +57,12 @@ class LeadController extends Controller
         $lead->added_by = auth()->user()->id;
         $lead->save();
 
+        try {
+            $lead->headquater_address = $this->lookup($lead->company_name);
+            $lead->save();
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
 
         Toastr::success('Lead added successfully');
         return redirect()->back();
