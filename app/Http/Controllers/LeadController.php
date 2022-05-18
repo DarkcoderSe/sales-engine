@@ -9,14 +9,13 @@ use App\Models\Lead;
 use App\Models\Profile;
 use App\Models\Technology;
 
+use Toastr;
+
 class LeadController extends Controller
 {
     public function index()
     {
-        $leads = [];
-        return view('lead.index')->with([
-            'leads' => $leads
-        ]);
+        return view('lead.index');
     }
 
     public function create()
@@ -36,19 +35,28 @@ class LeadController extends Controller
     {
         $request->validate([
             'company_name' => 'required|string',
-            'client_name' => 'required|string',
             'job_title' => 'required|string',
-            'phase' => 'required|numeric',
-            'phase_effective_date' => 'required|date',
-            'status' => 'required|numeric',
-            'status_effective_date' => 'required|date',
-            'job_source' => 'required|numeric',
-            'job_source_url' => 'nullable|url',
-            'profile' => 'required|numeric',
-            'technology' => 'required|numeric',
-            'BD' => 'nullable|string',
-            'assgin_at' => 'nullable|date'
+            'job_source_url' => 'required|url',
+            'contact_name' => 'required|string',
+            'email' => 'required|email',
+            'linkedin_profile' => 'required|url'
         ]);
+
+        $lead = new Lead;
+        $lead->company_name = $request->get('company_name');
+        $lead->client_name = $request->get('client_name');
+        $lead->job_title = $request->get('job_title');
+        $lead->job_source_url = $request->get('job_source_url');
+        $lead->contact_name = $request->get('contact_name');
+        $lead->email = $request->get('email');
+        $lead->linkedin_profile = $request->get('linkedin_profile');
+        $lead->added_by = auth()->user()->id;
+        $lead->save();
+
+
+        Toastr::success('Lead added successfully');
+        return redirect()->back();
+
     }
 
 }

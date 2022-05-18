@@ -17,7 +17,7 @@
 
 
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="form-group">
                                 <label>Company Name <span class="text-danger">*</span></label>
                                 <input type="text" name="company_name" class="form-control" value="{{ old('company_name') }}">
@@ -29,7 +29,7 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        {{-- <div class="col-md-6">
                             <div class="form-group">
                                 <label>Client Name <span class="text-danger">*</span></label>
                                 <input type="text" name="client_name" class="form-control" value="{{ old('client_name') }}">
@@ -40,7 +40,7 @@
                                 </span>
                                 @endif
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
 
                     <div class="row">
@@ -74,7 +74,7 @@
 
                     <div class="row">
 
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label>Contact Name <span class="text-danger">*</span></label>
                                 <input type="text" name="contact_name" class="form-control" value="{{ old('contact_name') }}">
@@ -87,7 +87,20 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Email Address <span class="text-danger">*</span></label>
+                                <input type="email" name="email" class="form-control" value="{{ old('email') }}">
+
+                                @if ($errors->any('email'))
+                                <span class="text-danger small">
+                                    {{ $errors->first('email') }}
+                                </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label>LinkedIn Profile <span class="text-danger">*</span></label>
                                 <input type="text" name="linkedin_profile" class="form-control" value="{{ old('linkedin_profile') }}">

@@ -11,8 +11,8 @@
                     <thead>
                         <tr>
                             <th scope="col">Company Name</th>
-                            <th scope="col">Client Name</th>
                             <th scope="col">Job Title</th>
+                            <th scope="col">Contact Name</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -22,15 +22,15 @@
                                 {{ $lead->company_name }}
                             </td>
                             <td>
-                                {{ $lead->client_name }}
+                                {{ $lead->job_title }}
                             </td>
                             <td>
-                                {{ $lead->job_title }}
+                                {{ $lead->contact_name }}
                             </td>
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="3">
+                            <td colspan="4">
                                 <h4>No Recent Leads Found</h4>
                             </td>
                         </tr>

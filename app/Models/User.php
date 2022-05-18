@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+use Carbon\Carbon;
+
 class User extends \TCG\Voyager\Models\User
 {
     use HasFactory, Notifiable;
@@ -40,6 +42,7 @@ class User extends \TCG\Voyager\Models\User
 
     public function leads()
     {
-        return $this->hasMany(Lead::class, 'added_by');
+        $dt = Carbon::now();
+        return $this->hasMany(Lead::class, 'added_by')->where('created_at', '>', $dt->startOfDay());
     }
 }
