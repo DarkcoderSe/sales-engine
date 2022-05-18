@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Lead extends Model
 {
     use HasFactory;
+
+    public $export_handler = \App\Exports\Lead::class;
 }
