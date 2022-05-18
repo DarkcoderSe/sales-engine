@@ -21,4 +21,15 @@ Route::get('/', function () {
 //     return view('dashboard');
 // })->middleware(['auth'])->name('dashboard');
 
+Route::prefix('lead')->middleware('auth')->name('lead.')->group(function() {
+    Route::get('/', 'LeadController@index')->name('index');
+    Route::get('create', 'LeadController@create')->name('create');
+    Route::post('submit', 'LeadController@submit')->name('submit');
+});
+
 require __DIR__.'/auth.php';
+
+
+Route::group(['prefix' => 'admin'], function () {
+    Voyager::routes();
+});

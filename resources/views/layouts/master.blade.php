@@ -63,23 +63,6 @@
                 <!-- End Page-content -->
 
 
-
-                <!-- Footer start -->
-                <footer class="landing-footer">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <p class="mb-2">2022 © Lead Generation System. All Rights Reserved</p>
-                            </div>
-
-                        </div>
-                    </div>
-                    <!-- end container -->
-                </footer>
-                <!-- Footer end -->
-
-
-
             </div>
             <!-- end main content-->
 
