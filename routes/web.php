@@ -27,6 +27,10 @@ Route::prefix('lead')->middleware('auth')->name('lead.')->group(function() {
     Route::post('submit', 'LeadController@submit')->name('submit');
 });
 
+Route::get('test', function () {
+    return view('bd.create');
+});
+
 require __DIR__.'/auth.php';
 
 
