@@ -1,26 +1,24 @@
-<header id="page-topbar" style="background: #1877f2 !important;">
+<header id="page-topbar" style="/* background: #1877f2 !important; */">
     <div class="navbar-header">
         <div class="d-flex">
             <!-- LOGO -->
             <div class="navbar-brand-box">
                 <a href="{{URL::to('/')}}" class="logo logo-dark">
-                    {{-- <span class="logo-sm">
-                        <img src="assets/images/logo.svg" alt="" height="22">
+                    <span class="logo-sm">
+                        <img src="{{asset('td-logo.png')}}" alt="" height="22">
                     </span>
                     <span class="logo-lg">
-                        <img src="assets/images/logo-dark.png" alt="" height="17">
-                    </span> --}}
-                    <h2 class="text-white">Lead Gen Sys</h2>
+                        <img src="{{asset('td-logo.png')}}" alt="" height="17">
+                    </span>
                 </a>
 
                 <a href="{{URL::to('/')}}" class="logo logo-light">
-                    {{-- <span class="logo-sm">
-                        <img src="assets/images/logo-light.svg" alt="" height="22">
+                    <span class="logo-sm">
+                        <img src="{{asset('td-logo.png')}}" alt="" height="22">
                     </span>
                     <span class="logo-lg">
-                        <img src="assets/images/logo-light.png" alt="" height="19">
-                    </span> --}}
-                    <h2 class="text-white mt-3 pt-1">Lead Gen Sys</h2>
+                        <img src="{{asset('td-logo.png')}}" alt="" height="50">
+                    </span>
 
                 </a>
             </div>
@@ -65,8 +63,6 @@
                 </button>
                 <div class="dropdown-menu dropdown-menu-right">
                     <!-- item-->
-                    <a class="dropdown-item" href="{{ URL::to('profile') }}"><i class="bx bx-user font-size-16 align-middle mr-1"></i> Profile</a>
-
                     <div class="dropdown-divider"></div>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
