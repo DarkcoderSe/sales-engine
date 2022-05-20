@@ -30,6 +30,15 @@ Route::prefix('lead')->middleware(['auth'])->name('lead.')->group(function() {
 Route::get('test', function () {
     return view('bd.create');
 });
+Route::get('testnew', function () {
+    return view('reports.report');
+});
+Route::get('testsearch', function () {
+    return view('search.search');
+});
+Route::get('testsearchdata', function () {
+    return view('searchdata.searchdata');
+});
 
 require __DIR__.'/auth.php';
 
