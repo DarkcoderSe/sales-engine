@@ -21,10 +21,16 @@ Route::get('/', function () {
 //     return view('dashboard');
 // })->middleware(['auth'])->name('dashboard');
 
-Route::prefix('lead')->middleware(['auth'])->name('lead.')->group(function() {
+Route::prefix('lead')->middleware(['auth', 'role:agent'])->name('lead.')->group(function() {
     Route::get('/', 'LeadController@index')->name('index');
     Route::get('create', 'LeadController@create')->name('create');
     Route::post('submit', 'LeadController@submit')->name('submit');
+});
+
+Route::prefix('sales-engine')->middleware(['auth', 'role:bdm'])->name('sales-engine.')->group(function() {
+    Route::get('create', 'SalesEngineController@create')->name('create');
+    Route::get('search', 'SalesEngineController@search')->name('search');
+    Route::post('search', 'SalesEngineController@result')->name('result');
 });
 
 Route::get('test', function () {
