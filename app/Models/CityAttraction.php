@@ -5,9 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Lead extends Model
+class CityAttraction extends Model
 {
     use HasFactory;
-
-    public $export_handler = \App\Exports\Lead::class;
 }
