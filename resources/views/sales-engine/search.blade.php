@@ -1,9 +1,9 @@
 @extends('layouts.master')
 
-@section('title', 'Add new Lead')
+@section('title', 'Search Organization')
 
 @section('content')
-<style> 
+<style>
 .select2-container--default .select2-selection--single {
     background-color: #fff;
     border: 1px solid #ced4da;
@@ -43,28 +43,40 @@
     padding-left:120px;
 }
 </style>
+
 <div class="row justify-content-center">
     <div class="col-12 col-md-12 pb-4 mb-4">
-
-            <div class="card">
-                <div class="card-body searchWraper">
+        <div class="card">
+            <div class="card-body searchWraper">
+                <form action="{{ route('sales-engine.search') }}" method="post">
+                    @csrf
                     <div class="row no-gutters">
-					<div class="col-md-10 align-self-center">
-						<div class="form-group">
-							<label>Company Name: </label>
-							<input type="text" class="form-control addToListField"> </div>
-					</div>
-					<div class="col-md-2 align-self-center cstmSpaceBtn">
-						<button type="button" class="btn btn-primary addToListBtn">Search</button>
-					</div>
-				</div>
-                        
-                </div>    
-        </div>  
+                        <div class="col-md-10 align-self-center">
+                            <div class="form-group">
+                                <label>Company Name: </label>
+                                <input type="text" name="query" class="form-control addToListField" placeholder="i.e: TransData"> </div>
+                                @if ($errors->any('query'))
+                                <span class="small text-danger">
+                                    {{ $erorrs->first('query') }}
+                                </span>
+                                @endif
+
+
+                            </div>
+                            <div class="col-md-2 align-self-center cstmSpaceBtn">
+                                <button type="button" class="btn btn-primary addToListBtn">Search</button>
+                            </div>
+                        </div>
+                        <div class="row no-gutters">
+                            <div class="col-md-10 align-self-center">
+                                <a href="{{ route('sales-engine.create') }}">Click here</a>
+                                    to add new Organization
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
-
-
+        </div>
     </div>
-</div
-
+</div>
 @endsection

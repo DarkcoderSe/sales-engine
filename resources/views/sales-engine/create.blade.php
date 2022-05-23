@@ -58,7 +58,8 @@
 </style>
 <div class="row justify-content-center">
 	<div class="col-10 col-md-10 pb-4 mb-4">
-		<form action="{{ URL::to('lead/submit') }}" method="post"> @csrf
+		<form action="{{ route('sales-engine.submit') }}" method="post">
+            @csrf
 			<div class="card">
 				<div class="card-body">
 					<h4 class="card-title">Lead Detail</h4>
@@ -89,167 +90,174 @@
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
-								<label>Job Source URL <span class="text-danger">*</span></label> <i class="fa fa-plus-circle addItem" data-toggle="modal" data-target="#exampleModal" aria-hidden="true"></i>
-								<select aria-label="Default select example" name="job_source_url" class="form-control" value="{{ old('job_source_url') }}">
-									<option value="1">upwork.com</option>
-									<option value="2">Two</option>
-									<option value="3">Three</option>
-								</select> @if ($errors->any('job_source_url')) <span class="text-danger small">
+								<label>Job Source <span class="text-danger">*</span></label> <i class="fa fa-plus-circle addItem" data-toggle="modal" data-target="#addJobSource" aria-hidden="true"></i>
+								<select aria-label="Default select example" name="job_source_id" class="form-control" required>
+									@foreach ($jobSources as $jobSource)
+                                    <option value="{{ $jobSource->id }}">
+                                        {{ $jobSource->name }}
+                                    </option>
+                                    @endforeach
+								</select>
+                                @if ($errors->any('job_source_url'))
+                                <span class="text-danger small">
                                     {{ $errors->first('job_source_url') }}
-                                </span> @endif </div>
+                                </span>
+                                @endif
+                            </div>
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-md-6">
 							<div class="form-group">
-								<label>Profile <span class="text-danger">*</span></label> <i class="fa fa-plus-circle addItem" data-toggle="modal" data-target="#exampleModal" aria-hidden="true"></i>
-								<select aria-label="Default select example" name="contact_name" class="form-control" value="{{ old('contact_name') }}" required>
-									<option value="1">aqeelkamboh</option>
-									<option value="2">Two</option>
-									<option value="3">Three</option>
-								</select> @if ($errors->any('contact_name')) <span class="text-danger small">
-                                    {{ $errors->first('contact_name') }}
-                                </span> @endif </div>
+								<label>Profile <span class="text-danger">*</span></label> <i class="fa fa-plus-circle addItem" data-toggle="modal" data-target="#addProfile" aria-hidden="true"></i>
+								<select aria-label="Default select example" name="profile_id" class="form-control" required>
+                                    @foreach ($profiles as $profile)
+                                    <option value="{{ $profile->id }}">{{ $profile->name }}</option>
+                                    @endforeach
+								</select>
+                                @if ($errors->any('profile_id'))
+                                <span class="text-danger small">
+                                    {{ $errors->first('profile_id') }}
+                                </span>
+                                @endif
+                            </div>
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
-								<label>Technologies <span class="text-danger">*</span></label> <i class="fa fa-plus-circle addItem" data-toggle="modal" data-target="#exampleModal" aria-hidden="true"></i>
-								<select aria-label="Default select example" name="linkedin_profile" class="form-control" value="{{ old('linkedin_profile') }}">
-									<option value="1">Project Manager</option>
-									<option value="2">Two</option>
-									<option value="3">Three</option>
-								</select> @if ($errors->any('linkedin_profile')) <span class="text-danger small">
-                                    {{ $errors->first('linkedin_profile') }}
-                                </span> @endif </div>
+								<label>Technologies <span class="text-danger">*</span></label> <i class="fa fa-plus-circle addItem" data-toggle="modal" data-target="#addTechnology" aria-hidden="true"></i>
+								<select aria-label="Default select example" name="technology_id" class="form-control" required>
+                                    @foreach ($technologies as $technology)
+                                    <option value="{{ $technology->id }}">
+                                        {{ $technology->name }}
+                                    </option>
+                                    @endforeach
+								</select>
+                                @if ($errors->any('technology_id'))
+                                <span class="text-danger small">
+                                    {{ $errors->first('technology_id') }}
+                                </span>
+                                @endif
+                            </div>
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-md-6">
+						<div class="col-md-12">
 							<div class="form-group">
-								<label>User Name <span class="text-danger">*</span></label>
-								<select aria-label="Default select example" name="contact_name" class="form-control" value="{{ old('contact_name') }}">
-									<option value="1">Imran Ahmad</option>
-									<option value="2">Kamboh</option>
-									<option value="3">Darkcoder</option>
-								</select> @if ($errors->any('contact_name')) <span class="text-danger small">
-                                    {{ $errors->first('contact_name') }}
-                                </span> @endif </div>
-						</div>
-						<div class="col-md-6">
-							<div class="form-group">
-								<label>Lead Stage <span class="text-danger">*</span></label>
-								<select aria-label="Default select example" name="linkedin_profile" class="form-control" value="{{ old('linkedin_profile') }}">
-									<option value="1">Prospect</option>
-									<option value="2">Prospect</option>
-									<option value="3">Darkcoder</option>
-								</select> @if ($errors->any('linkedin_profile')) <span class="text-danger small">
-                                    {{ $errors->first('linkedin_profile') }}
-                                </span> @endif </div>
+								<label>Status <span class="text-danger">*</span></label>
+								<select aria-label="Default select example" name="status" class="form-control" value="{{ old('status') }}">
+									<option value="0">Prospect</option>
+									<option value="1">Worm</option>
+									<option value="2">Hired</option>
+								</select>
+                                @if ($errors->any('status'))
+                                <span class="text-danger small">
+                                    {{ $errors->first('status') }}
+                                </span>
+                                @endif
+                            </div>
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-md-6">
-							<div class="form-group">
-								<label>Phase Effect Date <span class="text-danger">*</span></label>
-								<input type="date" class="form-control"> @if ($errors->any('contact_name')) <span class="text-danger small">
-                                    {{ $errors->first('contact_name') }}
-                                </span> @endif </div>
-						</div>
-						<div class="col-md-6">
+						<div class="col-md-12">
 							<div class="form-group">
 								<label>Resume</label>
-								<textarea type="text" class="form-control" rows="1"> </textarea> @if ($errors->any('linkedin_profile')) <span class="text-danger small">
-                                    {{ $errors->first('linkedin_profile') }}
-                                </span> @endif </div>
+								<textarea type="text" class="form-control" name="resume" rows="4"> </textarea>
+                                @if ($errors->any('resume'))
+                                <span class="text-danger small">
+                                    {{ $errors->first('resume') }}
+                                </span>
+                                @endif
+                            </div>
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-md-6">
 							<div class="form-group">
 								<label>Cover Letter</label>
-								<textarea type="text" class="form-control" rows="1"> </textarea> @if ($errors->any('linkedin_profile')) <span class="text-danger small">
-                                    {{ $errors->first('linkedin_profile') }}
-                                </span> @endif </div>
+								<textarea type="text" name="cover_letter" class="form-control" rows="4"> </textarea>
+                                @if ($errors->any('cover_letter'))
+                                <span class="text-danger small">
+                                    {{ $errors->first('cover_letter') }}
+                                </span>
+                                @endif
+                            </div>
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
 								<label>Job Description</label>
-								<textarea type="text" class="form-control" rows="1"> </textarea> @if ($errors->any('linkedin_profile')) <span class="text-danger small">
-                                    {{ $errors->first('linkedin_profile') }}
-                                </span> @endif </div>
+								<textarea type="text" name="job_description" class="form-control" rows="4"> </textarea>
+                                @if ($errors->any('job_description'))
+                                <span class="text-danger small">
+                                    {{ $errors->first('job_description') }}
+                                </span>
+                                @endif
+                            </div>
 						</div>
 					</div>
+
 					<h4 class="card-title mt-2">About Team</h4>
-					<p class="card-title-desc">all information below</p>
+					<p class="card-title-desc">All Information below:</p>
 					<div class="table-responsive">
-                                            <table class="table table-striped mb-0 table-bordered ">
+                        <table class="table table-striped mb-0 table-bordered ">
 
-                                                <thead>
-                                                    <tr>
-                                                        <th></th>
-                                                        <th>Assigned To</th>
-                                                        <th>Fit for</th>
-                                                        <th>PM</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <th  style="width:50px !important;">
-															<input type="radio" >
-														</th>
-                                                        <td>Mark</td>
-                                                        <td>Otto</td>
-                                                        <td>@mdo</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th ><input type="radio" ></th>
-                                                        <td>Jacob</td>
-                                                        <td>Thornton</td>
-                                                        <td>@fat</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th ><input type="radio" ></th>
-                                                        <td>Larry</td>
-                                                        <td>the Bird</td>
-                                                        <td>@twitter</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Assigned To</th>
+                                    <th>Fit for</th>
+                                    <th>PM</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($developers as $developer)
+                                <tr>
+                                    <th  style="width:50px !important;">
+                                        <input type="radio" name="developer" value="{{ $developer->id }}">
+                                    </th>
+                                    <td>{{ $developer->name }}</td>
+                                    <td>Otto</td>
+                                    <td>@mdo</td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
 				</div>
-
 			</div>
+
 			<div class="text-right mt-2 mb-4">
-						<button type="submit" class="btn btn-primary waves-effect waves-light">Add Lead</button>
-					</div>
+				<button type="submit" class="btn btn-primary waves-effect waves-light">Add Lead</button>
+			</div>
 	</div>
 </div>
 </form>
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="addProfile" tabindex="-1" aria-labelledby="addProfileTitle" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">Add Items to List</h5>
+				<h5 class="modal-title" id="exampleModalLabel">Add Profile</h5>
 				<button type="button" class="close " data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
 			</div>
 			<div class="modal-body">
-				<div class="row justify-content-center no-gutters">
-					<div class="col-md-8 align-self-center">
-						<div class="form-group">
-							<label>Add Items: </label>
-							<input type="text" class="form-control addToListField"> </div>
-					</div>
-					<div class="col-md-2 align-self-center cstmSpaceBtn">
-						<button type="button" class="btn btn-primary addToListBtn">Add</button>
-					</div>
-				</div>
+                <form action="" method="post">
+                    <div class="row justify-content-center no-gutters">
+                        <div class="col-md-8 align-self-center">
+                            <div class="form-group">
+                                <label>Add Item </label>
+                                <input type="text" name="item" class="form-control addToListField">
+                            </div>
+                        </div>
+                        <div class="col-md-2 align-self-center cstmSpaceBtn">
+                            <button type="submit" class="btn btn-primary addToListBtn">Add</button>
+                        </div>
+                    </div>
+                </form>
 			</div>
 		</div>
-		<div class="modal-footer"> </div>
 	</div>
 </div>
+
 </div>
 </div
 @endsection

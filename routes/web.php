@@ -31,6 +31,8 @@ Route::prefix('sales-engine')->middleware(['auth', 'role:bdm'])->name('sales-eng
     Route::get('create', 'SalesEngineController@create')->name('create');
     Route::get('search', 'SalesEngineController@search')->name('search');
     Route::post('search', 'SalesEngineController@result')->name('result');
+
+    Route::post('submit', 'SalesEngineController@submit')->name('submit');
 });
 
 Route::get('test', function () {
