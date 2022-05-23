@@ -45,9 +45,9 @@
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
                     <div class="row">
-                        <div class="col pr-0">
+                        <div class="col pr-0" title="{{ auth()->user()->name ?? '' }}">
                             @if (auth()->user()->picture)
-                            <img class="rounded-circle header-profile-user" src="{{ URL::to(auth()->user()->picture ?? '') }}" onerror="this.src=`{{ URL::to('/assets/images/users/avatar-6.jpg') }}`"
+                            <img class="rounded-circle header-profile-user"  src="{{ URL::to(auth()->user()->picture ?? '') }}" onerror="this.src=`{{ URL::to('/assets/images/users/avatar-6.jpg') }}`"
                                 alt="Header Avatar">
                             @else
                             <div class="avatar-xs align-self-center mr-3">

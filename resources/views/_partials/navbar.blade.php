@@ -38,11 +38,6 @@
                         </a>
                     </li>
 
-                    <li class="nav-item">
-                        <a href="{{ URL::to('sales-engine/report') }}" class="nav-link">
-                            <i class="bx bx-pyramid mr-2"></i> Reports
-                        </a>
-                    </li>
                     @elseif (auth()->user()->hasRole('superadmin'))
                     <li class="nav-item">
                         <a href="{{ URL::to('admin') }}" class="nav-link">

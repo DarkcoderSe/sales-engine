@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Add new Item')
+@section('title', 'Edit Item - Sales Engine')
 @section('content')
 <style>
 .select2-container--default .select2-selection--single {
@@ -58,8 +58,9 @@
 </style>
 <div class="row justify-content-center">
 	<div class="col-10 col-md-10 pb-4 mb-4">
-		<form action="{{ route('sales-engine.submit') }}" method="post">
+		<form action="{{ route('sales-engine.update') }}" method="post">
             @csrf
+            <input type="hidden" name="itemId" value="{{ $bdmLead->id }}">
 			<div class="card">
 				<div class="card-body">
 					<h4 class="card-title">Item Detail</h4>
@@ -68,14 +69,14 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label>Company Name <span class="text-danger">*</span></label>
-								<input type="text" name="company_name" class="form-control" value="{{ old('company_name') }}"> @if ($errors->any('company_name')) <span class="text-danger small">
+								<input type="text" name="company_name" class="form-control" value="{{ $bdmLead->company_name }}"> @if ($errors->any('company_name')) <span class="text-danger small">
                                     {{ $errors->first('company_name') }}
                                 </span> @endif </div>
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
 								<label>Client Name <span class="text-danger">*</span></label>
-								<input type="text" name="client_name" class="form-control" value="{{ old('client_name') }}"> @if ($errors->any('client_name')) <span class="text-danger small">
+								<input type="text" name="client_name" class="form-control" value="{{ $bdmLead->client_name }}"> @if ($errors->any('client_name')) <span class="text-danger small">
                                     {{ $errors->first('client_name') }}
                                 </span> @endif </div>
 						</div>
@@ -84,7 +85,7 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label>Job Title <span class="text-danger">*</span></label>
-								<input type="text" name="job_title" class="form-control" value="{{ old('job_title') }}"> @if ($errors->any('job_title')) <span class="text-danger small">
+								<input type="text" name="job_title" class="form-control" value="{{ $bdmLead->job_title }}"> @if ($errors->any('job_title')) <span class="text-danger small">
                                     {{ $errors->first('job_title') }}
                                 </span> @endif </div>
 						</div>
@@ -93,7 +94,7 @@
 								<label>Job Source <span class="text-danger">*</span></label> <i class="fa fa-plus-circle addItem" data-toggle="modal" data-target="#addJobSource" aria-hidden="true"></i>
 								<select aria-label="Default select example" name="job_source_id" class="form-control" required>
 									@foreach ($jobSources as $jobSource)
-                                    <option value="{{ $jobSource->id }}">
+                                    <option value="{{ $jobSource->id }}" {{ $bdmLead->job_source_id == $jobSource->id ? 'selected' : '' }}>
                                         {{ $jobSource->name }}
                                     </option>
                                     @endforeach
@@ -112,7 +113,9 @@
 								<label>Profile <span class="text-danger">*</span></label> <i class="fa fa-plus-circle addItem" data-toggle="modal" data-target="#addProfile" aria-hidden="true"></i>
 								<select aria-label="Default select example" name="profile_id" class="form-control" required>
                                     @foreach ($profiles as $profile)
-                                    <option value="{{ $profile->id }}">{{ $profile->name }}</option>
+                                    <option value="{{ $profile->id }}" {{ $bdmLead->profile_id == $profile->id ? 'selected' : '' }}>
+                                        {{ $profile->name }}
+                                    </option>
                                     @endforeach
 								</select>
                                 @if ($errors->any('profile_id'))
@@ -127,7 +130,7 @@
 								<label>Technologies <span class="text-danger">*</span></label> <i class="fa fa-plus-circle addItem" data-toggle="modal" data-target="#addTechnology" aria-hidden="true"></i>
 								<select aria-label="Default select example" name="technology_id" class="form-control" required>
                                     @foreach ($technologies as $technology)
-                                    <option value="{{ $technology->id }}">
+                                    <option value="{{ $technology->id }}" {{ $bdmLead->technology_id == $technology->id ? 'selected' : '' }}>
                                         {{ $technology->name }}
                                     </option>
                                     @endforeach
@@ -144,10 +147,10 @@
 						<div class="col-md-12">
 							<div class="form-group">
 								<label>Status <span class="text-danger">*</span></label>
-								<select aria-label="Default select example" name="status" class="form-control" value="{{ old('status') }}">
-									<option value="0">Prospect</option>
-									<option value="1">Worm</option>
-									<option value="2">Hired</option>
+								<select aria-label="Default select example" name="status" class="form-control">
+									<option {{ $bdmLead->status == 0 ? 'selected' : '' }} value="0">Prospect</option>
+									<option {{ $bdmLead->status == 1 ? 'selected' : '' }} value="1">Worm</option>
+									<option {{ $bdmLead->status == 2 ? 'selected' : '' }} value="2">Hired</option>
 								</select>
                                 @if ($errors->any('status'))
                                 <span class="text-danger small">
@@ -161,7 +164,7 @@
 						<div class="col-md-12">
 							<div class="form-group">
 								<label>Resume</label>
-								<textarea type="text" class="form-control" name="resume" rows="4"> </textarea>
+								<textarea type="text" class="form-control" name="resume" rows="4">{{ $bdmLead->resume }}</textarea>
                                 @if ($errors->any('resume'))
                                 <span class="text-danger small">
                                     {{ $errors->first('resume') }}
@@ -174,7 +177,7 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label>Cover Letter</label>
-								<textarea type="text" name="cover_letter" class="form-control" rows="4"> </textarea>
+								<textarea type="text" name="cover_letter" class="form-control" rows="4">{{ $bdmLead->cover_letter }}</textarea>
                                 @if ($errors->any('cover_letter'))
                                 <span class="text-danger small">
                                     {{ $errors->first('cover_letter') }}
@@ -185,7 +188,7 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label>Job Description</label>
-								<textarea type="text" name="job_description" class="form-control" rows="4"> </textarea>
+								<textarea type="text" name="job_description" class="form-control" rows="4">{{ $bdmLead->job_description }}</textarea>
                                 @if ($errors->any('job_description'))
                                 <span class="text-danger small">
                                     {{ $errors->first('job_description') }}
@@ -209,10 +212,11 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                {{-- @dd($bd/mLead->developer) --}}
                                 @foreach ($developers as $developer)
                                 <tr>
                                     <th  style="width:50px !important;">
-                                        <input type="radio" name="developer" value="{{ $developer->id }}">
+                                        <input type="radio" name="developer" value="{{ $developer->id }}" {{ $bdmLead->developer->developer_id == $developer->id ? 'checked' : '' }}>
                                     </th>
                                     <td>{{ $developer->name }}</td>
                                     <td>Otto</td>
@@ -226,7 +230,7 @@
 			</div>
 
 			<div class="text-right mt-2 mb-4">
-				<button type="submit" class="btn btn-primary waves-effect waves-light">Add Item</button>
+				<button type="submit" class="btn btn-primary waves-effect waves-light">Update Item</button>
 			</div>
 	</div>
 </div>

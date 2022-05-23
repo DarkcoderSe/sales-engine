@@ -73,18 +73,4 @@ class LeadController extends Controller
 
     }
 
-    public function jobSourceSubmit(Request $request)
-    {
-        $request->validate([
-            'job_source_name' => 'required|string'
-        ]);
-
-        $jobSource = new JobSource;
-        $jobSource->name = $request->get('job_source_name');
-        $jobSource->save();
-
-        Toastr::success('Job Source Added Successfully');
-        return redirect()->back();
-    }
-
 }
