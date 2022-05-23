@@ -25,6 +25,8 @@ Route::prefix('lead')->middleware(['auth'])->name('lead.')->group(function() {
     Route::get('/', 'LeadController@index')->name('index');
     Route::get('create', 'LeadController@create')->name('create');
     Route::post('submit', 'LeadController@submit')->name('submit');
+
+    Route::post('job-source/submit', 'LeadController@jobSourceSubmit')->name('job-source.submit');
 });
 
 require __DIR__.'/auth.php';

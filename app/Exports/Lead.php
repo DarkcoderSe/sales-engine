@@ -6,8 +6,12 @@ use Tu6ge\VoyagerExcel\Exports\AbstractExport;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 use App\Models\Lead as L;
+use App\Models\CityAttraction;
+use Maatwebsite\Excel\Concerns\WithStyles;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 
-class Lead extends AbstractExport implements FromView
+class Lead extends AbstractExport implements FromView, WithStyles, ShouldAutoSize
 {
     protected $dataType;
     protected $model;
@@ -31,8 +35,17 @@ class Lead extends AbstractExport implements FromView
 
     public function view(): View
     {
+        $cityAttractions = CityAttraction::all();
         return view('exports.lead', [
-            'leads' => $this->leads
+            'leads' => $this->leads,
+            'cityAttractions' => $cityAttractions
         ]);
+    }
+
+    public function styles(Worksheet $sheet)
+    {
+        return [
+            1 => ['font' => ['bold' => true]],
+        ];
     }
 }

@@ -43,7 +43,8 @@ class LeadController extends Controller
             'job_source_url' => 'required|url',
             'contact_name' => 'required|string',
             'email' => 'required|email',
-            'linkedin_profile' => 'required|url'
+            'linkedin_profile' => 'required|url',
+            'company_linkedin_url' => 'required|url'
         ]);
 
         $lead = new Lead;
@@ -54,11 +55,14 @@ class LeadController extends Controller
         $lead->contact_name = $request->get('contact_name');
         $lead->email = $request->get('email');
         $lead->linkedin_profile = $request->get('linkedin_profile');
+        $lead->company_linkedin_url = $request->get('company_linkedin_url');
         $lead->added_by = auth()->user()->id;
         $lead->save();
 
         try {
-            $lead->headquater_address = $this->lookup($lead->company_name);
+            // https://www.linkedin.com/company/transdata-international
+            $url = explode('/', 'https://www.linkedin.com/company/transdata-international');
+            $lead->headquater_address = $this->lookup($url[4] ?? '');
             $lead->save();
         } catch (\Throwable $th) {
             //throw $th;
@@ -67,6 +71,20 @@ class LeadController extends Controller
         Toastr::success('Lead added successfully');
         return redirect()->back();
 
+    }
+
+    public function jobSourceSubmit(Request $request)
+    {
+        $request->validate([
+            'job_source_name' => 'required|string'
+        ]);
+
+        $jobSource = new JobSource;
+        $jobSource->name = $request->get('job_source_name');
+        $jobSource->save();
+
+        Toastr::success('Job Source Added Successfully');
+        return redirect()->back();
     }
 
 }
