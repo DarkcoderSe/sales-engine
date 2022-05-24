@@ -18,4 +18,9 @@ class BdmLead extends Model
     {
         return $this->hasOne(BdmLeadDeveloper::class, 'bdm_lead_id');
     }
+
+    public function technologies()
+    {
+        return $this->hasMany(BdmLeadTechnology::class, 'bdm_lead_id');
+    }
 }

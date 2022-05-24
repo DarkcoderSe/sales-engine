@@ -126,11 +126,20 @@
                             </div>
 						</div>
 						<div class="col-md-6">
+                            {{-- @dd($bdmLead->technologies) --}}
 							<div class="form-group">
 								<label>Technologies <span class="text-danger">*</span></label> <i class="fa fa-plus-circle addItem" data-toggle="modal" data-target="#addTechnology" aria-hidden="true"></i>
-								<select aria-label="Default select example" name="technology_id" class="form-control" required>
+								<select aria-label="Default select example" name="technology_id" class="form-control" multiple required>
                                     @foreach ($technologies as $technology)
-                                    <option value="{{ $technology->id }}" {{ $bdmLead->technology_id == $technology->id ? 'selected' : '' }}>
+                                    <option value="{{ $technology->id }}"
+                                        @if ($bdmLead->technologies)
+                                            @php
+                                                $selectTech = $bdmLead->technologies->where('technology_id', $technology->id)->first();
+                                                if (!is_null($selectTech)) {
+                                                    echo 'selected';
+                                                }
+                                            @endphp
+                                        @endif>
                                         {{ $technology->name }}
                                     </option>
                                     @endforeach
@@ -212,7 +221,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {{-- @dd($bd/mLead->developer) --}}
+                                @php
+                                    $developers = $developers->sortByDesc('id');
+                                @endphp
                                 @foreach ($developers as $developer)
                                 <tr>
                                     <th  style="width:50px !important;">

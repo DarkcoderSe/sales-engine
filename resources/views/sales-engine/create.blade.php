@@ -125,7 +125,7 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label>Technologies <span class="text-danger">*</span></label> <i class="fa fa-plus-circle addItem" data-toggle="modal" data-target="#addTechnology" aria-hidden="true"></i>
-								<select aria-label="Default select example" name="technology_id" class="form-control" required>
+								<select aria-label="Default select example" name="technology_id[]" class="form-control" multiple required>
                                     @foreach ($technologies as $technology)
                                     <option value="{{ $technology->id }}">
                                         {{ $technology->name }}
@@ -209,10 +209,13 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($developers as $developer)
+                                @php
+                                    $developers = $developers->sortByDesc('id');
+                                @endphp
+                                @foreach ($developers as $key => $developer)
                                 <tr>
                                     <th  style="width:50px !important;">
-                                        <input type="radio" name="developer" value="{{ $developer->id }}">
+                                        <input type="radio" name="developer" value="{{ $developer->id }}" {{ $loop->first ? 'checked' : '' }}>
                                     </th>
                                     <td>{{ $developer->name }}</td>
                                     <td>Otto</td>

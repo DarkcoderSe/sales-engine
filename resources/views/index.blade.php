@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Lead Generation System')
+@section('title', 'Management System - TransData')
 
 @section('content')
 <div class="container">
