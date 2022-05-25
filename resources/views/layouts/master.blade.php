@@ -153,6 +153,7 @@
                     }).done(function(data) {
                         $('#addJobSource').modal('hide');
                         getJobSource();
+                        toastr.success('Item added successfully');
 
                         // Optionally alert the user of success here...
                     }).fail(function(data) {
@@ -171,6 +172,8 @@
                     }).done(function(data) {
                         $('#addProfile').modal('hide');
                         getProfile();
+                        toastr.success('Item added successfully');
+
 
                         // Optionally alert the user of success here...
                     }).fail(function(data) {
@@ -189,6 +192,7 @@
                     }).done(function(data) {
                         $('#addTechnology').modal('hide');
                         getTechnology();
+                        toastr.success('Item added successfully');
 
                         // Optionally alert the user of success here...
                     }).fail(function(data) {
