@@ -91,7 +91,7 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label>Job Source <span class="text-danger">*</span></label> <i class="fa fa-plus-circle addItem" data-toggle="modal" data-target="#addJobSource" aria-hidden="true"></i>
-								<select aria-label="Default select example" name="job_source_id" class="form-control" required>
+								<select aria-label="Default select example"  name="job_source_id" class="form-control" id="job_source_select"  required>
 									@foreach ($jobSources as $jobSource)
                                     <option value="{{ $jobSource->id }}">
                                         {{ $jobSource->name }}
@@ -110,7 +110,7 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label>Profile <span class="text-danger">*</span></label> <i class="fa fa-plus-circle addItem" data-toggle="modal" data-target="#addProfile" aria-hidden="true"></i>
-								<select aria-label="Default select example" name="profile_id" class="form-control" required>
+								<select aria-label="Default select example" name="profile_id" id="profile_select" class="form-control" required>
                                     @foreach ($profiles as $profile)
                                     <option value="{{ $profile->id }}">{{ $profile->name }}</option>
                                     @endforeach
@@ -125,7 +125,7 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label>Technologies <span class="text-danger">*</span></label> <i class="fa fa-plus-circle addItem" data-toggle="modal" data-target="#addTechnology" aria-hidden="true"></i>
-								<select aria-label="Default select example" name="technology_id[]" class="form-control" multiple required>
+								<select aria-label="Default select example" name="technology_id[]" class="form-control" id="technology_select" multiple required>
                                     @foreach ($technologies as $technology)
                                     <option value="{{ $technology->id }}">
                                         {{ $technology->name }}
@@ -245,7 +245,7 @@
 				<button type="button" class="close " data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
 			</div>
 			<div class="modal-body">
-                <form action="{{ route('profile.submit') }}" method="post">
+                <form action="{{ route('profile.submit') }}" method="post" id="add-profile-form" name="add-profile-form">
                     @csrf
                     <div class="row justify-content-center no-gutters">
                         <div class="col-md-8 align-self-center">
@@ -255,7 +255,8 @@
                             </div>
                         </div>
                         <div class="col-md-2 align-self-center cstmSpaceBtn">
-                            <button type="submit" class="btn btn-primary addToListBtn">Add</button>
+{{--                            <button type="submit" class="btn btn-primary addToListBtn">Add</button>--}}
+                            <input type="submit" class="btn btn-primary addToList" id="add-profile-btn" name="add-profile-btn" value="Add">
                         </div>
                     </div>
                 </form>
@@ -272,7 +273,7 @@
 				<button type="button" class="close " data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
 			</div>
 			<div class="modal-body">
-                <form action="{{ route('technology.submit') }}" method="post">
+                <form action="{{ route('technology.submit') }}" method="post" id="add-technology-form" name="add-technology-form">
                     @csrf
                     <div class="row justify-content-center no-gutters">
                         <div class="col-md-8 align-self-center">
@@ -282,7 +283,8 @@
                             </div>
                         </div>
                         <div class="col-md-2 align-self-center cstmSpaceBtn">
-                            <button type="submit" class="btn btn-primary addToListBtn">Add</button>
+{{--                            <button type="submit" class="btn btn-primary addToListBtn">Add</button>--}}
+                            <input type="submit" class="btn btn-primary addToListBtn" id="add-technology-btn" name="add-technology-btn" value="Add">
                         </div>
                     </div>
                 </form>
@@ -299,7 +301,7 @@
 				<button type="button" class="close " data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
 			</div>
 			<div class="modal-body">
-                <form action="{{ route('job-source.submit') }}" method="post">
+                <form action="{{route('job-source.submit')}}" method="post" id="add-job-form"  name ="add-job-form" class="add-job-form">
                     @csrf
                     <div class="row justify-content-center no-gutters">
                         <div class="col-md-8 align-self-center">
@@ -309,11 +311,13 @@
                             </div>
                         </div>
                         <div class="col-md-2 align-self-center cstmSpaceBtn">
-                            <button type="submit" class="btn btn-primary addToListBtn">Add</button>
+                            <input type="submit" class="btn btn-primary addToListBtn" id="add-job-btn" name="add-job-btn" value="Add">
+
                         </div>
                     </div>
                 </form>
-			</div>
+
+            </div>
 		</div>
 	</div>
 </div>
@@ -321,4 +325,6 @@
 
 </div>
 </div
+
 @endsection
+

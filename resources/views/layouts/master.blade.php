@@ -106,6 +106,97 @@
                 $(".bs-select").select2('destroy');
             });
         </script>
+        <script>
+            function getJobSource() {
+                let url = '{{ URL::to('sales-engine/get-job-source') }}';
+                $.get(url, function(response) {
+                    $("#job_source_select").empty();
+                    $("#job_source_select").append('<option>--Select Source Job--</option>');
+                    response.forEach(row => {
+                        $("#job_source_select").append('<option value=' + row.id + '>' + row.name + '</option>');
+                    });
+                });
+            }
+
+
+            function getProfile() {
+                let url = '{{ URL::to('sales-engine/get-profile') }}';
+                $.get(url, function(response) {
+                    $("#profile_select").empty();
+                    $("#profile_select").append('<option>--Select Profile--</option>');
+                    response.forEach(row => {
+                        $("#profile_select").append('<option value=' + row.id + '>' + row.name + '</option>');
+                    });
+                });
+            }
+
+            function getTechnology() {
+                let url = '{{ URL::to('sales-engine/get-technology') }}';
+                $.get(url, function(response) {
+                    $("#technology_select").empty();
+                    response.forEach(row => {
+                        $("#technology_select").append('<option value=' + row.id + '>' + row.name + '</option>');
+                    });
+                });
+            }
+        </script>
+        <script>
+            $(function() {
+                $("#add-job-form").submit(function(event) {
+
+                    event.preventDefault(); // Prevent the form from submitting via the browser
+                    var form = $(this);
+                    $.ajax({
+                        type: form.attr('method'),
+                        url: form.attr('action'),
+                        data: form.serialize()
+                    }).done(function(data) {
+                        $('#addJobSource').modal('hide');
+                        getJobSource();
+
+                        // Optionally alert the user of success here...
+                    }).fail(function(data) {
+                        // Optionally alert the user of an error here...
+                    });
+                });
+
+                $("#add-profile-form").submit(function(event) {
+
+                    event.preventDefault(); // Prevent the form from submitting via the browser
+                    var form = $(this);
+                    $.ajax({
+                        type: form.attr('method'),
+                        url: form.attr('action'),
+                        data: form.serialize()
+                    }).done(function(data) {
+                        $('#addProfile').modal('hide');
+                        getProfile();
+
+                        // Optionally alert the user of success here...
+                    }).fail(function(data) {
+                        // Optionally alert the user of an error here...
+                    });
+                });
+
+                $("#add-technology-form").submit(function(event) {
+
+                    event.preventDefault(); // Prevent the form from submitting via the browser
+                    var form = $(this);
+                    $.ajax({
+                        type: form.attr('method'),
+                        url: form.attr('action'),
+                        data: form.serialize()
+                    }).done(function(data) {
+                        $('#addTechnology').modal('hide');
+                        getTechnology();
+
+                        // Optionally alert the user of success here...
+                    }).fail(function(data) {
+                        // Optionally alert the user of an error here...
+                    });
+                });
+            });
+        </script>
     </body>
 
 </html>

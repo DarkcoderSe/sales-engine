@@ -36,6 +36,10 @@ Route::prefix('sales-engine')->middleware(['auth', 'role:bdm'])->name('sales-eng
     Route::get('create', 'SalesEngineController@create')->name('create');
     Route::get('search', 'SalesEngineController@search')->name('search');
     Route::get('edit/{id}', 'SalesEngineController@edit')->name('edit');
+    Route::get('get-job-source', 'SalesEngineController@getJobSource')->name('get-job-source');
+    Route::get('get-profile', 'SalesEngineController@getProfile')->name('get-profile');
+    Route::get('get-technology', 'SalesEngineController@getTechnology')->name('get-technology');
+
 
     Route::post('search', 'SalesEngineController@result')->name('result');
     Route::post('submit', 'SalesEngineController@submit')->name('submit');

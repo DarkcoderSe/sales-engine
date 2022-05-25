@@ -157,4 +157,34 @@ class SalesEngineController extends Controller
         Toastr::success('Item has been added successfully');
         return redirect()->back();
     }
+    public function getJobSource()
+    {
+        $jobSources = JobSource::all();
+        foreach ($jobSources as $key => $jobSource)
+        {
+            $job[$key]['id']=$jobSource['id'];
+            $job[$key]['name']=$jobSource['name'];
+        }
+        return response()->json($job, 200);
+    }
+    public function getProfile()
+    {
+        $profiles = Profile::all();
+        foreach ($profiles as $key => $profile)
+        {
+            $prof[$key]['id']=$profile['id'];
+            $prof[$key]['name']=$profile['name'];
+        }
+        return response()->json($prof, 200);
+    }
+    public function getTechnology()
+    {
+        $technologies = Technology::all();
+        foreach ($technologies as $key => $technology)
+        {
+            $tech[$key]['id']=$technology['id'];
+            $tech[$key]['name']=$technology['name'];
+        }
+        return response()->json($tech, 200);
+    }
 }
