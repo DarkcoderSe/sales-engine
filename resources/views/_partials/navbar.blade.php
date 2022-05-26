@@ -33,8 +33,13 @@
                     </li>
                     @elseif (auth()->user()->hasRole('bdm'))
                     <li class="nav-item">
-                        <a href="{{ URL::to('sales-engine/search') }}" class="nav-link">
+                        <a href="{{ route('sales-engine.create') }}" class="nav-link">
                             <i class='bx bx-plus-circle mr-2'></i> Add Item
+                        </a>
+                    </li>
+                            <li class="nav-item">
+                        <a href="{{ route('sales-engine.reports') }}" class="nav-link">
+                            <i class='bx bx-plus-circle mr-2'></i> Reports
                         </a>
                     </li>
 

@@ -11,6 +11,7 @@ use App\Models\Technology;
 use App\Models\Developer;
 use App\Models\BdmLeadDeveloper;
 use App\Models\BdmLeadTechnology;
+use App\Models\User;
 
 use Carbon\Carbon;
 
@@ -157,34 +158,59 @@ class SalesEngineController extends Controller
         Toastr::success('Item has been added successfully');
         return redirect()->back();
     }
+
     public function getJobSource()
     {
         $jobSources = JobSource::all();
-        foreach ($jobSources as $key => $jobSource)
-        {
-            $job[$key]['id']=$jobSource['id'];
-            $job[$key]['name']=$jobSource['name'];
+        foreach ($jobSources as $key => $jobSource) {
+            $job[$key]['id'] = $jobSource['id'];
+            $job[$key]['name'] = $jobSource['name'];
         }
         return response()->json($job, 200);
     }
+
     public function getProfile()
     {
         $profiles = Profile::all();
-        foreach ($profiles as $key => $profile)
-        {
-            $prof[$key]['id']=$profile['id'];
-            $prof[$key]['name']=$profile['name'];
+        foreach ($profiles as $key => $profile) {
+            $prof[$key]['id'] = $profile['id'];
+            $prof[$key]['name'] = $profile['name'];
         }
         return response()->json($prof, 200);
     }
+
     public function getTechnology()
     {
         $technologies = Technology::all();
-        foreach ($technologies as $key => $technology)
-        {
-            $tech[$key]['id']=$technology['id'];
-            $tech[$key]['name']=$technology['name'];
+        foreach ($technologies as $key => $technology) {
+            $tech[$key]['id'] = $technology['id'];
+            $tech[$key]['name'] = $technology['name'];
         }
         return response()->json($tech, 200);
+    }
+
+    public function report()
+    {
+        return view('reports.report');
+    }
+
+    public function searchReport(Request $request)
+    {
+        $leads=BdmLead::where('company_name', 'like', '%' . $request->search . '%')->get();
+        foreach ($leads as $key => $lead)
+        {
+            $lead['created_at']=Carbon::parse($lead->created_at)->format('Y-m-d');
+            $lead['agent']=User::select('name')->where('id',$lead->user_id)->first();
+            $lead['job_source']=JobSource::select('name')->where('id',$lead->job_source_id)->first();
+            $lead['profile']=Profile::select('name')->where('id',$lead->profile_id)->first();
+            $devLead=BdmLeadDeveloper::select('developer_id')->where('bdm_lead_id', $lead->id)->first();
+            $lead['developer']=Developer::select('name')->where('id',$devLead->developer_id)->first();
+
+//       dd($lead['agent']);
+        }
+
+
+        return response()->json($leads, 200);
+
     }
 }
