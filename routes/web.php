@@ -50,19 +50,6 @@ Route::prefix('sales-engine')->middleware(['auth', 'role:bdm'])->name('sales-eng
 
 });
 
-Route::get('test', function () {
-    return view('bd.create');
-});
-Route::get('testnew', function () {
-    return view('reports.report');
-});
-Route::get('testsearch', function () {
-    return view('search.search');
-});
-Route::get('testsearchdata', function () {
-    return view('searchdata.searchdata');
-});
-
 require __DIR__.'/auth.php';
 
 

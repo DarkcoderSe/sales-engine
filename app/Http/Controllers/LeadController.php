@@ -13,6 +13,8 @@ use Toastr;
 
 use App\Traits\Organization;
 
+use Carbon\Carbon;
+
 class LeadController extends Controller
 {
     use Organization;
@@ -44,8 +46,18 @@ class LeadController extends Controller
             'contact_name' => 'required|string',
             'email' => 'required|email',
             'linkedin_profile' => 'required|url',
-            'company_linkedin_url' => 'required|url'
+            'company_linkedin_url' => 'required|url',
+            'job_type' => 'required|string',
+            'job_description' => 'required|string'
         ]);
+
+
+        $dateNow = Carbon::now()->startOfDay();
+        $leadCount = Lead::where('email', $request->get('email'))->where('created_at', '>', $dateNow)->count();
+        if ($leadCount > 0) {
+            Toastr::error('Lead already added');
+            return redirect()->back();
+        }
 
         $lead = new Lead;
         $lead->company_name = $request->get('company_name');
@@ -56,12 +68,15 @@ class LeadController extends Controller
         $lead->email = $request->get('email');
         $lead->linkedin_profile = $request->get('linkedin_profile');
         $lead->company_linkedin_url = $request->get('company_linkedin_url');
+        $lead->job_description = $request->get('job_description');
+        $lead->email_status = $request->get('email_status');
+        $lead->job_type = $request->get('job_type');
         $lead->added_by = auth()->user()->id;
         $lead->save();
 
         try {
             // https://www.linkedin.com/company/transdata-international
-            $url = explode('/', 'https://www.linkedin.com/company/transdata-international');
+            $url = explode('/', $lead->company_linkedin_url);
             $lead->headquater_address = $this->lookup($url[4] ?? '');
             $lead->save();
         } catch (\Throwable $th) {
