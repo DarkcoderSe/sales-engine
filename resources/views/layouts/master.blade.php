@@ -217,19 +217,27 @@
             url: form.attr('action'),
             data: {
                 "_token": "{{ csrf_token() }}",
-                "search": $('#search').val()
+
+                "search": $('#search-field').val(),
+                "date-from": $('#filter-date-from').val(),
+                "date-to": $('#filter-date-to').val(),
+                "profile": $('#filter-profile').val(),
+                "phase": $('#filter-phase').val(),
+                "status": $('#filter-status').val(),
+                "technology": $('#filter-technology').val(),
+                "bd": $('#filter-bd').val(),
+                "job-source": $('#filter-job-source').val(),
+                "assigned-to": $('#filter-assigned-to').val(),
             }
         }).done(function (data) {
             let rowDoms = '';
 
             if (data == null) {
-                alert('im he');
                 rowDoms += `<tr>
                                         <td colspan="5">No data Found</td>
 
                                  </tr>`;
                 $('#search-result').removeClass('d-none');
-
 
             } else {
                 data.forEach(row => {
@@ -240,7 +248,9 @@
                                         <td>${row.job_source.name}</td>
                                         <td>${row.developer.name}</td>
                                         <td>${row.profile.name}</td>
-                                        <td>${row.status}</td>
+                                        <td>
+                                            ${row.status}
+                                        </td>
                                         <td>${row.agent.name}</td>
                                  </tr>`;
                 });
@@ -256,39 +266,7 @@
             // Optionally alert the user of an error here...
         });
     });
-    {{--      search();--}}
-    {{--      function search(){--}}
-    {{--          var keyword = $('#search').val();--}}
-    {{--          alert(keyword);--}}
-    {{--          --}}
-    {{--          $.post('{{ route("sales-engine.report-search") }}',--}}
-    {{--              {--}}
-    {{--                  keyword:keyword--}}
-    {{--              },--}}
-    {{--              function(data){--}}
-    {{--                  table_post_row(data);--}}
-    {{--                  console.log(data);--}}
-    {{--              });--}}
-    {{--      }--}}
-    {{--      // table row with ajax--}}
-    {{--      function table_post_row(res){--}}
-    {{--          let htmlView = '';--}}
-    {{--          if(res.employees.length <= 0){--}}
-    {{--              htmlView+= `--}}
-    {{-- <tr>--}}
-    {{--    <td colspan="4">No data.</td>--}}
-    {{--</tr>`;--}}
-    {{--          }--}}
-    {{--          for(let i = 0; i < res.employees.length; i++){--}}
-    {{--              htmlView += `--}}
-    {{--  <tr>--}}
-    {{--     <td>`+ (i+1) +`</td>--}}
-    {{--        <td>`+res.employees[i].name+`</td>--}}
-    {{--         <td>`+res.employees[i].phone+`</td>--}}
-    {{--  </tr>`;--}}
-    {{--          }--}}
-    {{--          $('tbody').html(htmlView);--}}
-    {{--      }--}}
+
 </script>
 </body>
 

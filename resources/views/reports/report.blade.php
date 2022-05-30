@@ -48,7 +48,7 @@ thead{
                             <label>Serach</label>
                             <div class="form-group has-search">
                             <span class="fa fa-search form-control-feedback"></span>
-                            <input type="text"  name="search" id="search" class="form-control searchfield" placeholder="Type here....">
+                            <input type="text"  name="search" id="search-field" class="form-control searchfield" placeholder="Type here....">
                         </div>
                         </div>
                 </div>
@@ -56,20 +56,20 @@ thead{
                     <div class="col-md-4">
                         <div class="form-group">
                         <label>Date From </label>
-                        <input type="date" class="form-control" >
+                        <input type="date" id="filter-date-from" class="form-control" >
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
                         <label>Date to </label>
-                        <input type="date" class="form-control" >
+                        <input type="date" class="form-control"  id="filter-date-to">
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
                         <label>Profile </label>
-                        <select  class="form-control" >
-                            <option value="1" >Imran Ahmad</option>
+                        <select  class="form-control" id="filter-profile">
+                            <option>Imran Ahmad</option>
                             <option value="2">Kamboh</option>
                             <option value="3">Darkcoder</option>
                         </select>
@@ -80,8 +80,8 @@ thead{
                     <div class="col-md-4">
                         <div class="form-group">
                         <label>Phase </label>
-                        <select  class="form-control" >
-                            <option value="1" >None</option>
+                        <select  class="form-control" id="filter-phase">
+                            <option>None</option>
                             <option value="2">Kamboh</option>
                             <option value="3">Darkcoder</option>
                         </select>
@@ -90,8 +90,8 @@ thead{
                     <div class="col-md-4">
                         <div class="form-group">
                         <label>Status </label>
-                        <select  class="form-control" >
-                            <option value="1" >None</option>
+                        <select  class="form-control" id="filter-status">
+                            <option>None</option>
                             <option value="2">Kamboh</option>
                             <option value="3">Darkcoder</option>
                         </select>
@@ -100,8 +100,8 @@ thead{
                     <div class="col-md-4">
                         <div class="form-group">
                         <label>Technology </label>
-                        <select  class="form-control" >
-                            <option value="1" >None</option>
+                        <select  class="form-control" id="filter-technology">
+                            <option>None</option>
                             <option value="2">Kamboh</option>
                             <option value="3">Darkcoder</option>
                         </select>
@@ -112,8 +112,8 @@ thead{
                     <div class="col-md-4">
                         <div class="form-group">
                         <label>BD </label>
-                        <select  class="form-control" >
-                            <option value="1" >None</option>
+                        <select  class="form-control"  id="filter-bd">
+                            <option>None</option>
                             <option value="2">Kamboh</option>
                             <option value="3">Darkcoder</option>
                         </select>
@@ -122,8 +122,8 @@ thead{
                     <div class="col-md-4">
                         <div class="form-group">
                         <label>Job Source </label>
-                        <select  class="form-control" >
-                            <option value="1" >None</option>
+                        <select  class="form-control"  id="filter-job-source">
+                            <option>None</option>
                             <option value="2">Kamboh</option>
                             <option value="3">Darkcoder</option>
                         </select>
@@ -132,8 +132,8 @@ thead{
                     <div class="col-md-4">
                         <div class="form-group">
                         <label>Assigned to </label>
-                        <select  class="form-control" >
-                            <option value="1" >None</option>
+                        <select  class="form-control" id="filter-assigned-to">
+                            <option>None</option>
                             <option value="2">Kamboh</option>
                             <option value="3">Darkcoder</option>
                         </select>

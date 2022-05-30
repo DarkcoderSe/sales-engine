@@ -196,6 +196,7 @@ class SalesEngineController extends Controller
 
     public function searchReport(Request $request)
     {
+        dd($request);
         $leads=BdmLead::where('company_name', 'like', '%' . $request->search . '%')->get();
         foreach ($leads as $key => $lead)
         {
