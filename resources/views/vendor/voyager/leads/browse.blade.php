@@ -55,19 +55,30 @@
                                         <input type="date" name="to" placeholder="To" class="form-control" value="{{ request()->get('to') }}">
                                     </div>
                                     <div class="col-md-6 text-right">
+                                        @if (request()->get('from') || request()->get('to'))
                                         <h4>
-                                            Total Leads: {{ count(\App\Models\Lead::today()) }}
+                                            Total Filtered Leads: {{ $dataTypeContent->total() ?? 0}}
+                                        </h4>
+                                        <span class="text-primary">
+                                            {{ request()->get('from') }} - {{ request()->get('to') ?? Carbon\Carbon::now() }}
+                                        </span>
+                                        @else
+                                        <h4>
+                                            Total Leads added today (So far): {{ count(\App\Models\Lead::today()) }}
                                         </h4>
                                         <span class="text-primary">
                                             {{ Carbon\Carbon::now() }}
                                         </span>
+                                        @endif
                                     </div>
                                 </div>
                                 <div id="search-input">
                                     <div class="col-2">
                                         <select id="search_key" name="key">
                                             @foreach($searchNames as $key => $name)
+                                                @if ($key != 'lead_belongsto_user_relationship')
                                                 <option value="{{ $key }}" @if($search->key == $key || (empty($search->key) && $key == $defaultSearchKey)) selected @endif>{{ $name }}</option>
+                                                @endif
                                             @endforeach
                                         </select>
                                     </div>
@@ -341,21 +352,21 @@
     <script>
         $(document).ready(function () {
             @if (!$dataType->server_side)
-                var table = $('#dataTable').DataTable({!! json_encode(
-                    array_merge([
-                        "order" => $orderColumn,
-                        "language" => __('voyager::datatable'),
-                        "columnDefs" => [
-                            ['targets' => 'dt-not-orderable', 'searchable' =>  false, 'orderable' => false, 'iDisplayLength' => 100],
+                @php
+                    $dataTableFields = json_encode(
+                        array_merge([
+                            "iDisplayLength" => 100,
+                            "order" => $orderColumn,
+                            "language" => __('voyager::datatable'),
+                            "columnDefs" => [
+                                ['targets' => 'dt-not-orderable', 'searchable' =>  false, 'orderable' => false],
+                            ]
                         ],
-                    ],
-                    config('voyager.dashboard.data_tables', []))
-                , true) !!});
+                        config('voyager.dashboard.data_tables', []))
+                    , true);
+                @endphp
+                var table = $('#dataTable').DataTable({!! $dataTableFields !!});
             @else
-
-                // $('#dataTable').DataTable({
-                //     'iDisplayLength': 100
-                // });
 
                 $('#search-input select').select2({
                     minimumResultsForSearch: Infinity
