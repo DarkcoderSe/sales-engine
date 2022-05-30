@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use Carbon\Carbon;
+
 class BdmLead extends Model
 {
     use HasFactory;
@@ -22,5 +24,11 @@ class BdmLead extends Model
     public function technologies()
     {
         return $this->hasMany(BdmLeadTechnology::class, 'bdm_lead_id');
+    }
+
+    public function today()
+    {
+        $date = Carbon::now()->startOfDay();
+        return BdmLead::where('created_at', '>', $date)->get();
     }
 }
