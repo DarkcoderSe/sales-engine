@@ -45,4 +45,9 @@ class User extends \TCG\Voyager\Models\User
         $dt = Carbon::now();
         return $this->hasMany(Lead::class, 'added_by')->where('created_at', '>', $dt->startOfDay());
     }
+
+    public function rolex()
+    {
+        return $this->belongsTo(Role::class, 'role_id');
+    }
 }
