@@ -197,25 +197,91 @@ class SalesEngineController extends Controller
         return response()->json($tech, 200);
     }
 
-    public function report()
+    public function report(Request $request)
     {
-        return view('reports.report');
+        $profiles = Profile::all();
+        $technologies = Technology::all();
+        $developers = Developer::all();
+        $jobSources = JobSource::all();
+        $bdms = User::with('role')->whereHas('role', function($q) {
+                                    return $q->where('name', 'bdm');
+                                })
+                                ->get();
+
+        // $leads = collect([]);
+        $query = $request->get('query');
+        $from = $request->get('from');
+        $to = $request->get('to');
+        $profile = $request->get('profile');
+        $technology = $request->get('technology');
+        $phase = $request->get('phase');
+        $status = $request->get('status');
+        $bdm = $request->get('bdm');
+        $jobSource = $request->get('jobSource');
+        $developer = $request->get('developer');
+
+        $leads = BdmLead::where('company_name', 'LIKE', "%{$query}%");
+        // filters
+        if (!is_null($from)) {
+            $leads = $leads->where('created_at', '>', $from);
+        }
+
+        if (!is_null($to)) {
+            $leads = $leads->where('created_at', '<', $to);
+        }
+
+        if ($profile != -1) {
+            $leads = $leads->where('profile_id', $profile);
+        }
+
+        // dd($leads->take(10)->get());
+
+
+        if ($phase != -1) {
+            $leads = $leads->where('phase', $phase);
+        }
+
+        if ($status != -1) {
+            $leads = $leads->where('status', $status);
+        }
+
+        if ($bdm != -1) {
+            $leads = $leads->where('user_id', $bdm);
+        }
+
+        if ($jobSource != -1) {
+            $leads = $leads->where('job_source_id', $jobSource);
+        }
+
+
+
+
+        $leads = $leads->orderBy('created_at', 'DESC')->paginate(30);
+
+        return view('reports.report')->with([
+            'profiles' => $profiles,
+            'technologies' => $technologies,
+            'developers' => $developers,
+            'jobSources' => $jobSources,
+            'bdms' => $bdms,
+            'leads' => $leads
+        ]);
     }
 
     public function searchReport(Request $request)
     {
-        $leads=BdmLead::where('company_name', 'like', '%' . $request->search . '%')->get();
-        foreach ($leads as $key => $lead)
-        {
-            $lead['created_at']=Carbon::parse($lead->created_at)->format('Y-m-d');
-            $lead['agent']=User::select('name')->where('id',$lead->user_id)->first();
-            $lead['job_source']=JobSource::select('name')->where('id',$lead->job_source_id)->first();
-            $lead['profile']=Profile::select('name')->where('id',$lead->profile_id)->first();
-            $devLead=BdmLeadDeveloper::select('developer_id')->where('bdm_lead_id', $lead->id)->first();
-            $lead['developer']=Developer::select('name')->where('id',$devLead->developer_id)->first();
+        $leads= BdmLead::where('company_name', 'like', '%' . $request->search . '%')->with(['developer', 'technologies'])->get();
+//         foreach ($leads as $key => $lead)
+//         {
+//             $lead['created_at']=Carbon::parse($lead->created_at)->format('Y-m-d');
+//             $lead['agent']=User::select('name')->where('id',$lead->user_id)->first();
+//             $lead['job_source']=JobSource::select('name')->where('id',$lead->job_source_id)->first();
+//             $lead['profile']=Profile::select('name')->where('id',$lead->profile_id)->first();
+//             $devLead=BdmLeadDeveloper::select('developer_id')->where('bdm_lead_id', $lead->id)->first();
+//             $lead['developer']=Developer::select('name')->where('id',$devLead->developer_id)->first();
 
-//       dd($lead['agent']);
-        }
+// //       dd($lead['agent']);
+//         }
 
 
         return response()->json($leads, 200);

@@ -26,6 +26,21 @@ class BdmLead extends Model
         return $this->hasMany(BdmLeadTechnology::class, 'bdm_lead_id');
     }
 
+    public function profile()
+    {
+        return $this->belongsTo(Profile::class, 'profile_id');
+    }
+
+    public function bdm()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function jobSource()
+    {
+        return $this->belongsTo(JobSource::class, 'job_source_id');
+    }
+
     public function today()
     {
         $date = Carbon::now()->startOfDay();

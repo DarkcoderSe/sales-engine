@@ -39,7 +39,7 @@
                     </li>
                             <li class="nav-item">
                         <a href="{{ route('sales-engine.reports') }}" class="nav-link">
-                            <i class='bx bx-plus-circle mr-2'></i> Reports
+                            <i class='bx bxs-report mr-2'></i> Reports
                         </a>
                     </li>
 
