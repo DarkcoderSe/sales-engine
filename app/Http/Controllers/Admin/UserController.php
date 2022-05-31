@@ -280,8 +280,8 @@ class UserController extends \TCG\Voyager\Http\Controllers\VoyagerBaseController
 
         if ($query->count() == 0) {
             $user = auth()->user()->name;
-            $btn = "";
-            return "STOP! <br> You are doing something bad, don't do this, {$user} User is saved in log file, And will be reported to System Administrators!";
+            $btn = "<a href='http://pearl-harbor.tdemo.biz'>Back</a>";
+            return "STOP! <br> You are doing something bad, don't do this, {$user} User is saved in log file, And will be reported to System Administrators! <br> {$btn}";
         }
 
         // If a column has a relationship associated with it, we do not want to show that field

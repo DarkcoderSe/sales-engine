@@ -60,7 +60,7 @@ class SalesEngineController extends Controller
     {
         $query = $request->get('query');
 
-        $bdmLeads = BdmLead::where('company_name', 'LIKE', "%{$query}%")->get();
+        $bdmLeads = BdmLead::where('company_name', 'LIKE', "%{$query}%")->orderBy('created_at', 'DESC')->get();
 
         return view('sales-engine.result')->with([
             'bdmLeads' => $bdmLeads
@@ -82,18 +82,22 @@ class SalesEngineController extends Controller
             'resume' => 'nullable|string',
             'cover_letter' => 'nullable|string',
             'job_description' => 'nullable|string',
-            'developer' => 'required|numeric'
+            'developer' => 'required|numeric',
+            'job_source_url' => 'required|url'
         ]);
 
         $lead = new BdmLead;
         $lead->profile_id = $request->get('profile_id');
         // $lead->technology_id = $request->get('technology_id');
         $lead->job_source_id = $request->get('job_source_id');
+        $lead->job_source_url = $request->get('job_source_url');
         $lead->company_name = $request->get('company_name');
         $lead->client_name = $request->get('client_name');
         $lead->job_title = $request->get('job_title');
         $lead->status = $request->get('status');
         $lead->status_changed = Carbon::now();
+        $lead->phase = $request->get('phase');
+        $lead->phase_changed_at = Carbon::now();
         $lead->resume = $request->get('resume');
         $lead->cover_letter = $request->get('cover_letter');
         $lead->job_description = $request->get('job_description');
@@ -131,18 +135,22 @@ class SalesEngineController extends Controller
             'resume' => 'nullable|string',
             'cover_letter' => 'nullable|string',
             'job_description' => 'nullable|string',
-            'developer' => 'required|numeric'
+            'developer' => 'required|numeric',
+            'job_source_url' => 'required|url'
         ]);
 
         $lead = BdmLead::find($request->get('itemId'));
         $lead->profile_id = $request->get('profile_id');
         $lead->technology_id = $request->get('technology_id');
         $lead->job_source_id = $request->get('job_source_id');
+        $lead->job_source_url = $request->get('job_source_url');
         $lead->company_name = $request->get('company_name');
         $lead->client_name = $request->get('client_name');
         $lead->job_title = $request->get('job_title');
         $lead->status = $request->get('status');
         $lead->status_changed = Carbon::now();
+        $lead->phase = $request->get('phase');
+        $lead->phase_changed_at = Carbon::now();
         $lead->resume = $request->get('resume');
         $lead->cover_letter = $request->get('cover_letter');
         $lead->job_description = $request->get('job_description');
@@ -155,8 +163,8 @@ class SalesEngineController extends Controller
         $bdmLeadDeveloper->bdm_lead_id = $lead->id;
         $bdmLeadDeveloper->save();
 
-        Toastr::success('Item has been added successfully');
-        return redirect()->back();
+        Toastr::success('Item has been updated successfully');
+        return redirect('sales-engine/search');
     }
 
     public function getJobSource()

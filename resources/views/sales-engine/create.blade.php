@@ -81,14 +81,14 @@
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-md-6">
+						<div class="col-md-4">
 							<div class="form-group">
 								<label>Job Title <span class="text-danger">*</span></label>
 								<input type="text" name="job_title" class="form-control" value="{{ old('job_title') }}"> @if ($errors->any('job_title')) <span class="text-danger small">
                                     {{ $errors->first('job_title') }}
                                 </span> @endif </div>
 						</div>
-						<div class="col-md-6">
+						<div class="col-md-2">
 							<div class="form-group">
 								<label>Job Source <span class="text-danger">*</span></label> <i class="fa fa-plus-circle addItem" data-toggle="modal" data-target="#addJobSource" aria-hidden="true"></i>
 								<select aria-label="Default select example"  name="job_source_id" class="form-control" id="job_source_select"  required>
@@ -104,6 +104,13 @@
                                 </span>
                                 @endif
                             </div>
+						</div>
+                        <div class="col-md-6">
+							<div class="form-group">
+								<label>Job Source URL <span class="text-danger">*</span></label>
+								<input type="text" name="job_source_url" class="form-control" value="{{ old('job_source_url') }}"> @if ($errors->any('job_source_url')) <span class="text-danger small">
+                                    {{ $errors->first('job_source_url') }}
+                                </span> @endif </div>
 						</div>
 					</div>
 					<div class="row">
@@ -141,17 +148,50 @@
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-md-12">
+						<div class="col-md-6">
 							<div class="form-group">
 								<label>Status <span class="text-danger">*</span></label>
 								<select aria-label="Default select example" name="status" class="form-control" value="{{ old('status') }}">
 									<option value="0">Prospect</option>
-									<option value="1">Worm</option>
-									<option value="2">Hired</option>
+									<option value="1">Warm Head</option>
+									<option value="2">Cold Head</option>
+									<option value="3">Hired</option>
+									<option value="4">Rejected</option>
+
 								</select>
                                 @if ($errors->any('status'))
                                 <span class="text-danger small">
                                     {{ $errors->first('status') }}
+                                </span>
+                                @endif
+                            </div>
+						</div>
+
+                        <div class="col-md-6">
+							<div class="form-group">
+								<label>Phase <span class="text-danger">*</span></label>
+								<select aria-label="Default select example" name="phase" class="form-control" value="{{ old('phase') }}">
+									<option value="0">Prospect</option>
+									<option value="1">Initial Correspondence</option>
+									<option value="2">Follow-up</option>
+									<option value="3">Pre-call Test</option>
+									<option value="4">Post-call Test</option>
+									<option value="5">1st Interview</option>
+									<option value="6">2nd Interview</option>
+									<option value="7">3rd Interview</option>
+									<option value="8">4th Interview</option>
+									<option value="9">Final Interview</option>
+									<option value="10">Reference Check</option>
+									<option value="11">Contract Awaited</option>
+									<option value="12">Contract Recieved</option>
+									<option value="13">Contract Signed & Sent</option>
+									<option value="14">Hired</option>
+									<option value="15">Rejected</option>
+									<option value="16">Dormant</option>
+								</select>
+                                @if ($errors->any('phase'))
+                                <span class="text-danger small">
+                                    {{ $errors->first('phase') }}
                                 </span>
                                 @endif
                             </div>

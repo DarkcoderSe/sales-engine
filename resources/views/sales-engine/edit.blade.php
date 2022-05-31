@@ -82,14 +82,14 @@
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-md-6">
+						<div class="col-md-4">
 							<div class="form-group">
 								<label>Job Title <span class="text-danger">*</span></label>
 								<input type="text" name="job_title" class="form-control" value="{{ $bdmLead->job_title }}"> @if ($errors->any('job_title')) <span class="text-danger small">
                                     {{ $errors->first('job_title') }}
                                 </span> @endif </div>
 						</div>
-						<div class="col-md-6">
+						<div class="col-md-2">
 							<div class="form-group">
 								<label>Job Source <span class="text-danger">*</span></label> <i class="fa fa-plus-circle addItem" data-toggle="modal" data-target="#addJobSource" aria-hidden="true"></i>
 								<select aria-label="Default select example" name="job_source_id" class="form-control" required>
@@ -105,6 +105,13 @@
                                 </span>
                                 @endif
                             </div>
+						</div>
+                        <div class="col-md-6">
+							<div class="form-group">
+								<label>Job Source URL <span class="text-danger">*</span></label>
+								<input type="text" name="job_source_url" class="form-control" value="{{ $bdmLead->job_source_url }}"> @if ($errors->any('job_source_url')) <span class="text-danger small">
+                                    {{ $errors->first('job_source_url') }}
+                                </span> @endif </div>
 						</div>
 					</div>
 					<div class="row">
@@ -153,17 +160,50 @@
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-md-12">
+						<div class="col-md-6">
 							<div class="form-group">
 								<label>Status <span class="text-danger">*</span></label>
 								<select aria-label="Default select example" name="status" class="form-control">
 									<option {{ $bdmLead->status == 0 ? 'selected' : '' }} value="0">Prospect</option>
-									<option {{ $bdmLead->status == 1 ? 'selected' : '' }} value="1">Worm</option>
-									<option {{ $bdmLead->status == 2 ? 'selected' : '' }} value="2">Hired</option>
+                                    <option {{ $bdmLead->status == 1 ? 'selected' : '' }} value="1">Warm Head</option>
+									<option {{ $bdmLead->status == 2 ? 'selected' : '' }} value="2">Cold Head</option>
+									<option {{ $bdmLead->status == 3 ? 'selected' : '' }} value="3">Hired</option>
+									<option {{ $bdmLead->status == 4 ? 'selected' : '' }} value="4">Rejected</option>
+
 								</select>
                                 @if ($errors->any('status'))
                                 <span class="text-danger small">
                                     {{ $errors->first('status') }}
+                                </span>
+                                @endif
+                            </div>
+						</div>
+
+                        <div class="col-md-6">
+							<div class="form-group">
+								<label>Phase <span class="text-danger">*</span></label>
+								<select aria-label="Default select example" name="phase" class="form-control" value="{{ old('phase') }}">
+									<option {{ $bdmLead->phase == 0 ? 'selected' : '' }} value="0">Prospect</option>
+									<option {{ $bdmLead->phase == 1 ? 'selected' : '' }} value="1">Initial Correspondence</option>
+									<option {{ $bdmLead->phase == 2 ? 'selected' : '' }} value="2">Follow-up</option>
+									<option {{ $bdmLead->phase == 3 ? 'selected' : '' }} value="3">Pre-call Test</option>
+									<option {{ $bdmLead->phase == 4 ? 'selected' : '' }} value="4">Post-call Test</option>
+									<option {{ $bdmLead->phase == 5 ? 'selected' : '' }} value="5">1st Interview</option>
+									<option {{ $bdmLead->phase == 6 ? 'selected' : '' }} value="6">2nd Interview</option>
+									<option {{ $bdmLead->phase == 7 ? 'selected' : '' }} value="7">3rd Interview</option>
+									<option {{ $bdmLead->phase == 8 ? 'selected' : '' }} value="8">4th Interview</option>
+									<option {{ $bdmLead->phase == 9 ? 'selected' : '' }} value="9">Final Interview</option>
+									<option {{ $bdmLead->phase == 10 ? 'selected' : '' }} value="10">Reference Check</option>
+									<option {{ $bdmLead->phase == 11 ? 'selected' : '' }} value="11">Contract Awaited</option>
+									<option {{ $bdmLead->phase == 12 ? 'selected' : '' }} value="12">Contract Recieved</option>
+									<option {{ $bdmLead->phase == 13 ? 'selected' : '' }} value="13">Contract Signed & Sent</option>
+									<option {{ $bdmLead->phase == 14 ? 'selected' : '' }} value="14">Hired</option>
+									<option {{ $bdmLead->phase == 15 ? 'selected' : '' }} value="15">Rejected</option>
+									<option {{ $bdmLead->phase == 16 ? 'selected' : '' }} value="16">Dormant</option>
+								</select>
+                                @if ($errors->any('phase'))
+                                <span class="text-danger small">
+                                    {{ $errors->first('phase') }}
                                 </span>
                                 @endif
                             </div>
