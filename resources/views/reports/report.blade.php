@@ -234,6 +234,7 @@
                             <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" style="width: 350px;" aria-label="Position: activate to sort column ascending">Profile</th>
                             <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" style="width: 168px;" aria-label="Start date: activate to sort column ascending">Status</th>
                             <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" style="width: 178px;" aria-label="Office: activate to sort column ascending">Agent (BD) </th>
+                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" style="width: 178px;" aria-label="Office: activate to sort column ascending">Tech Stack </th>
 
                         </tr>
                     </thead>
@@ -246,7 +247,11 @@
                                     {{ $lead->created_at }}
                                 </span>
                             </td>
-                            <td>{{ $lead->company_name }}</td>
+                            <td>
+                                <a href="{{ URL::to('sales-engine/edit', $lead->id) }}">
+                                    {{ $lead->company_name }}
+                                </a>
+                            </td>
                             <td>{{ $lead->job_title }} </td>
                             <td>{{ $lead->jobSource->name ?? '' }} </td>
                             <td>{{ $lead->developer->developer->name ?? '' }} </td>
@@ -265,11 +270,18 @@
                                 @endif
                             </td>
                             <td>{{ $lead->bdm->name ??'' }} </td>
+                            <td>
+                                @foreach ($lead->techs as $technology)
+                                <span class="badge badge-pill badge-primary">
+                                    {{ $technology->name ?? '' }}
+                                </span>
+                                @endforeach
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
-                {{ $leads->links() }}
+                {{ $leads->appends(request()->except('page'))->links() }}
             </div>
         </div>
     </div>

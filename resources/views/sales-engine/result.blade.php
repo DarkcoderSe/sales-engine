@@ -28,6 +28,7 @@
 										<th class="sorting_asc" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" style="width: 230px;" aria-sort="ascending" aria-label="Name: activate to sort column descending">Company Name</th>
 										<th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" style="width: 350px;" aria-label="Position: activate to sort column ascending">Position Applied</th>
 										<th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" style="width: 178px;" aria-label="Office: activate to sort column ascending">Agent (BD) </th>
+										<th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" style="width: 178px;" aria-label="Office: activate to sort column ascending">Tech Stack</th>
 										<th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" style="width: 95px;" aria-label="Age: activate to sort column ascending">Created At</th>
 										<th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" style="width: 168px;" aria-label="Start date: activate to sort column ascending">Status</th>
 
@@ -44,6 +45,13 @@
 										<td>{{ $lead->job_title }}</td>
 										<td>{{ $lead->addedBy->name ?? '' }} </td>
                                         <td>
+                                            @foreach ($lead->techs as $technology)
+                                            <span class="badge badge-pill badge-primary">
+                                                {{ $technology->name ?? '' }}
+                                            </span>
+                                            @endforeach
+                                        </td>
+                                        <td>
                                             {{ $lead->created_at->diffForHumans() }}
                                             <span class="small text-muted">{{ $lead->created_at }}</span>
                                         </td>
@@ -51,9 +59,13 @@
                                             @if ($lead->status == 0)
                                             Prospect
                                             @elseif ($lead->status == 1)
-                                            Worm
+                                            Warm Lead
                                             @elseif ($lead->status == 2)
+                                            Cold Lead
+                                            @elseif ($lead->status == 3)
                                             Hired
+                                            @elseif ($lead->status == 4)
+                                            Rejected
                                             @endif
                                         </td>
 									</tr>

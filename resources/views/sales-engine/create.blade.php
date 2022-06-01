@@ -58,7 +58,7 @@
 </style>
 <div class="row justify-content-center">
 	<div class="col-10 col-md-10 pb-4 mb-4">
-		<form action="{{ route('sales-engine.submit') }}" method="post">
+		<form action="{{ route('sales-engine.submit') }}" method="post" enctype="multipart/form-data">
             @csrf
 			<div class="card">
 				<div class="card-body">
@@ -107,7 +107,7 @@
 						</div>
                         <div class="col-md-6">
 							<div class="form-group">
-								<label>Job Source URL <span class="text-danger">*</span></label>
+								<label>Job Source URL </label>
 								<input type="text" name="job_source_url" class="form-control" value="{{ old('job_source_url') }}"> @if ($errors->any('job_source_url')) <span class="text-danger small">
                                     {{ $errors->first('job_source_url') }}
                                 </span> @endif </div>
@@ -153,8 +153,8 @@
 								<label>Status <span class="text-danger">*</span></label>
 								<select aria-label="Default select example" name="status" class="form-control" value="{{ old('status') }}">
 									<option value="0">Prospect</option>
-									<option value="1">Warm Head</option>
-									<option value="2">Cold Head</option>
+									<option value="1">Warm Lead</option>
+									<option value="2">Cold Lead</option>
 									<option value="3">Hired</option>
 									<option value="4">Rejected</option>
 
@@ -198,13 +198,24 @@
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-md-12">
+						<div class="col-md-6">
 							<div class="form-group">
 								<label>Resume</label>
-								<textarea type="text" class="form-control" name="resume" rows="4"> </textarea>
+                                <input type="file" name="resume" class="form-control">
                                 @if ($errors->any('resume'))
                                 <span class="text-danger small">
                                     {{ $errors->first('resume') }}
+                                </span>
+                                @endif
+                            </div>
+						</div>
+                        <div class="col-md-6">
+							<div class="form-group">
+								<label>Cover Letter</label>
+                                <input type="file" name="cover_letter" class="form-control">
+                                @if ($errors->any('cover_letter'))
+                                <span class="text-danger small">
+                                    {{ $errors->first('cover_letter') }}
                                 </span>
                                 @endif
                             </div>
@@ -213,11 +224,11 @@
 					<div class="row">
 						<div class="col-md-6">
 							<div class="form-group">
-								<label>Cover Letter</label>
-								<textarea type="text" name="cover_letter" class="form-control" rows="4"> </textarea>
-                                @if ($errors->any('cover_letter'))
+								<label>Notes</label>
+								<textarea type="text" name="notes" class="form-control" rows="4"> </textarea>
+                                @if ($errors->any('notes'))
                                 <span class="text-danger small">
-                                    {{ $errors->first('cover_letter') }}
+                                    {{ $errors->first('notes') }}
                                 </span>
                                 @endif
                             </div>

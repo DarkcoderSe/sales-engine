@@ -41,6 +41,11 @@ class BdmLead extends Model
         return $this->belongsTo(JobSource::class, 'job_source_id');
     }
 
+    public function techs()
+    {
+        return $this->belongsToMany(Technology::class, 'bdm_lead_technologies', 'bdm_lead_id', 'technology_id');
+    }
+
     public function today()
     {
         $date = Carbon::now()->startOfDay();

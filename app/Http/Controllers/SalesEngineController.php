@@ -17,6 +17,8 @@ use Carbon\Carbon;
 
 use Toastr;
 
+use Illuminate\Support\Facades\Storage;
+
 class SalesEngineController extends Controller
 {
     public function create()
@@ -60,7 +62,7 @@ class SalesEngineController extends Controller
     {
         $query = $request->get('query');
 
-        $bdmLeads = BdmLead::where('company_name', 'LIKE', "%{$query}%")->orderBy('created_at', 'DESC')->get();
+        $bdmLeads = BdmLead::where('company_name', 'LIKE', "%{$query}%")->orderBy('created_at', 'DESC')->with('techs')->limit(30)->get();
 
         return view('sales-engine.result')->with([
             'bdmLeads' => $bdmLeads
@@ -79,11 +81,11 @@ class SalesEngineController extends Controller
             'client_name' => 'required|string',
             'job_title' => 'required|string',
             'status' => 'required|numeric',
-            'resume' => 'nullable|string',
-            'cover_letter' => 'nullable|string',
+            'resume' => 'nullable|mimes:pdf,docx',
+            'cover_letter' => 'nullable|mimes:pdf,docx',
             'job_description' => 'nullable|string',
             'developer' => 'required|numeric',
-            'job_source_url' => 'required|url'
+            'job_source_url' => 'nullable|url'
         ]);
 
         $lead = new BdmLead;
@@ -98,9 +100,29 @@ class SalesEngineController extends Controller
         $lead->status_changed = Carbon::now();
         $lead->phase = $request->get('phase');
         $lead->phase_changed_at = Carbon::now();
-        $lead->resume = $request->get('resume');
-        $lead->cover_letter = $request->get('cover_letter');
+        // $lead->resume = $request->get('resume');
+        // $lead->cover_letter = $request->get('cover_letter');
+        $lead->notes = $request->get('notes');
         $lead->job_description = $request->get('job_description');
+        if ($request->hasFile('resume')) {
+
+            $file = $request->file('resume');
+            $name = time() . $file->getClientOriginalName();
+            $destinationPath = public_path('storage/resumes');
+            $file->move($destinationPath, $name);
+            $lead->resume = "resumes/{$name}";
+        }
+
+        if ($request->hasFile('cover_letter')) {
+
+            $file = $request->file('cover_letter');
+            $name = time() . $file->getClientOriginalName();
+            $destinationPath = public_path('storage/cover-letters');
+            $file->move($destinationPath, $name);
+            $lead->cover_letter = "cover-letters/{$name}";
+        }
+
+
         $lead->user_id = auth()->user()->id;
         $lead->save();
 
@@ -132,11 +154,11 @@ class SalesEngineController extends Controller
             'client_name' => 'required|string',
             'job_title' => 'required|string',
             'status' => 'required|numeric',
-            'resume' => 'nullable|string',
-            'cover_letter' => 'nullable|string',
+            'resume' => 'nullable|mimes:pdf,docx',
+            'cover_letter' => 'nullable|mimes:pdf,docx',
             'job_description' => 'nullable|string',
             'developer' => 'required|numeric',
-            'job_source_url' => 'required|url'
+            'job_source_url' => 'nullable|url'
         ]);
 
         $lead = BdmLead::find($request->get('itemId'));
@@ -150,9 +172,28 @@ class SalesEngineController extends Controller
         $lead->status = $request->get('status');
         $lead->status_changed = Carbon::now();
         $lead->phase = $request->get('phase');
+        $lead->notes = $request->get('notes');
         $lead->phase_changed_at = Carbon::now();
-        $lead->resume = $request->get('resume');
-        $lead->cover_letter = $request->get('cover_letter');
+        // $lead->resume = $request->get('resume');
+        // $lead->cover_letter = $request->get('cover_letter');
+        if ($request->hasFile('resume')) {
+
+            $file = $request->file('resume');
+            $name = time() . $file->getClientOriginalName();
+            $destinationPath = public_path('storage/resumes');
+            $file->move($destinationPath, $name);
+            $lead->resume = "resumes/{$name}";
+        }
+
+        if ($request->hasFile('cover_letter')) {
+
+            $file = $request->file('cover_letter');
+            $name = time() . $file->getClientOriginalName();
+            $destinationPath = public_path('storage/cover-letters');
+            $file->move($destinationPath, $name);
+            $lead->cover_letter = "cover-letters/{$name}";
+        }
+
         $lead->job_description = $request->get('job_description');
         $lead->save();
 
@@ -217,7 +258,7 @@ class SalesEngineController extends Controller
         $phase = $request->get('phase');
         $status = $request->get('status');
         $bdm = $request->get('bdm');
-        $jobSource = $request->get('jobSource');
+        $jobSource = $request->get('job_source');
         $developer = $request->get('developer');
 
         $leads = BdmLead::where('company_name', 'LIKE', "%{$query}%");
@@ -233,9 +274,6 @@ class SalesEngineController extends Controller
         if ($profile != -1) {
             $leads = $leads->where('profile_id', $profile);
         }
-
-        // dd($leads->take(10)->get());
-
 
         if ($phase != -1) {
             $leads = $leads->where('phase', $phase);
@@ -253,6 +291,20 @@ class SalesEngineController extends Controller
             $leads = $leads->where('job_source_id', $jobSource);
         }
 
+        if ($technology != -1) {
+            $leads = $leads->with('technologies')->whereHas('technologies', function ($q) use ($technology) {
+                return $q->where('technology_id', $technology);
+            });
+        }
+
+        if ($developer != -1) {
+            $leads = $leads->with('developer')->whereHas('developer', function ($q) use ($developer) {
+                return $q->where('developer_id', $developer);
+            });
+        }
+
+        // dd($leads->first()->techs);
+
 
 
 
@@ -266,25 +318,5 @@ class SalesEngineController extends Controller
             'bdms' => $bdms,
             'leads' => $leads
         ]);
-    }
-
-    public function searchReport(Request $request)
-    {
-        $leads= BdmLead::where('company_name', 'like', '%' . $request->search . '%')->with(['developer', 'technologies'])->get();
-//         foreach ($leads as $key => $lead)
-//         {
-//             $lead['created_at']=Carbon::parse($lead->created_at)->format('Y-m-d');
-//             $lead['agent']=User::select('name')->where('id',$lead->user_id)->first();
-//             $lead['job_source']=JobSource::select('name')->where('id',$lead->job_source_id)->first();
-//             $lead['profile']=Profile::select('name')->where('id',$lead->profile_id)->first();
-//             $devLead=BdmLeadDeveloper::select('developer_id')->where('bdm_lead_id', $lead->id)->first();
-//             $lead['developer']=Developer::select('name')->where('id',$devLead->developer_id)->first();
-
-// //       dd($lead['agent']);
-//         }
-
-
-        return response()->json($leads, 200);
-
     }
 }

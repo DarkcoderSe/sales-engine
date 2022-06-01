@@ -58,7 +58,7 @@
 </style>
 <div class="row justify-content-center">
 	<div class="col-10 col-md-10 pb-4 mb-4">
-		<form action="{{ route('sales-engine.update') }}" method="post">
+		<form action="{{ route('sales-engine.update') }}" method="post" enctype="multipart/form-data">
             @csrf
             <input type="hidden" name="itemId" value="{{ $bdmLead->id }}">
 			<div class="card">
@@ -108,7 +108,7 @@
 						</div>
                         <div class="col-md-6">
 							<div class="form-group">
-								<label>Job Source URL <span class="text-danger">*</span></label>
+								<label>Job Source URL </label>
 								<input type="text" name="job_source_url" class="form-control" value="{{ $bdmLead->job_source_url }}"> @if ($errors->any('job_source_url')) <span class="text-danger small">
                                     {{ $errors->first('job_source_url') }}
                                 </span> @endif </div>
@@ -165,8 +165,8 @@
 								<label>Status <span class="text-danger">*</span></label>
 								<select aria-label="Default select example" name="status" class="form-control">
 									<option {{ $bdmLead->status == 0 ? 'selected' : '' }} value="0">Prospect</option>
-                                    <option {{ $bdmLead->status == 1 ? 'selected' : '' }} value="1">Warm Head</option>
-									<option {{ $bdmLead->status == 2 ? 'selected' : '' }} value="2">Cold Head</option>
+                                    <option {{ $bdmLead->status == 1 ? 'selected' : '' }} value="1">Warm Lead</option>
+									<option {{ $bdmLead->status == 2 ? 'selected' : '' }} value="2">Cold Lead</option>
 									<option {{ $bdmLead->status == 3 ? 'selected' : '' }} value="3">Hired</option>
 									<option {{ $bdmLead->status == 4 ? 'selected' : '' }} value="4">Rejected</option>
 
@@ -210,10 +210,10 @@
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-md-12">
+						<div class="col-md-6">
 							<div class="form-group">
 								<label>Resume</label>
-								<textarea type="text" class="form-control" name="resume" rows="4">{{ $bdmLead->resume }}</textarea>
+                                <input type="file" name="resume" class="form-control">
                                 @if ($errors->any('resume'))
                                 <span class="text-danger small">
                                     {{ $errors->first('resume') }}
@@ -221,12 +221,10 @@
                                 @endif
                             </div>
 						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-6">
+                        <div class="col-md-6">
 							<div class="form-group">
 								<label>Cover Letter</label>
-								<textarea type="text" name="cover_letter" class="form-control" rows="4">{{ $bdmLead->cover_letter }}</textarea>
+                                <input type="file" name="cover_letter" class="form-control">
                                 @if ($errors->any('cover_letter'))
                                 <span class="text-danger small">
                                     {{ $errors->first('cover_letter') }}
@@ -234,6 +232,9 @@
                                 @endif
                             </div>
 						</div>
+					</div>
+					<div class="row">
+
 						<div class="col-md-6">
 							<div class="form-group">
 								<label>Job Description</label>
@@ -241,6 +242,18 @@
                                 @if ($errors->any('job_description'))
                                 <span class="text-danger small">
                                     {{ $errors->first('job_description') }}
+                                </span>
+                                @endif
+                            </div>
+						</div>
+
+                        <div class="col-md-6">
+							<div class="form-group">
+								<label>Notes</label>
+								<textarea type="text" name="notes" class="form-control" rows="4">{{ $bdmLead->notes }}</textarea>
+                                @if ($errors->any('notes'))
+                                <span class="text-danger small">
+                                    {{ $errors->first('notes') }}
                                 </span>
                                 @endif
                             </div>
