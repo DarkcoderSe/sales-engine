@@ -24,7 +24,8 @@ class Lead extends AbstractExport implements FromView, WithStyles, ShouldAutoSiz
         $this->dataType = $dataType;
         $this->model = new $dataType->model_name(); // this is current Model instance
         // $ids is user selected record ids
-        $this->leads = L::whereIn('id', $ids)->get();
+        // $this->leads = L::whereIn('id', $ids)->get();
+        $this->leads = L::today();
         // write your own idea
     }
 

@@ -11,26 +11,41 @@
             <thead>
                 <tr>
                     <th>Company Name</th>
-                    {{-- <th>Company URL</th> --}}
-                    <th>Source</th>
-                    <th>Contact Name</th>
+                    <th>Company LinkedIn Profile</th>
+                    {{-- <th>Company Website URL</th> --}}
+                    <th>Platform</th>
+                    <th>Job Source</th>
+                    <th>Job Description</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
                     <th>LinkedIn Profile</th>
                     <th>Job Title</th>
-                    <th>Email</th>
-                    <th>City</th>
+                    <th>Email Address</th>
+                    <th>Email Status</th>
+                    <th>HQ City</th>
                     <th>Attractions</th>
+
                 </tr>
             </thead>
             <tbody>
                 @foreach ($leads as $lead)
                 <tr>
                     <td>{{ $lead->company_name }} </td>
+                    <td>{{ $lead->company_linkedin_url }} </td>
                     {{-- <td>{{ $lead->company_url }} </td> --}}
+                    <td>{{ $lead->job_type }} </td>
                     <td>{{ $lead->job_source_url }} </td>
-                    <td>{{ $lead->contact_name }} </td>
+                    <td>{{ $lead->job_description }} </td>
+                    <td>
+                        {{ explode(" ", $lead->contact_name)[0] ?? $lead->contact_name }}
+                    </td>
+                    <td>
+                        {{ explode(" ", $lead->contact_name)[1] ?? $lead->contact_name }}
+                    </td>
                     <td>{{ $lead->linkedin_profile }} </td>
                     <td>{{ $lead->job_title }} </td>
                     <td>{{ $lead->email }} </td>
+                    <td>{{ $lead->email_status ? 'CATCHALL' : 'VALID'  }} </td>
                     @php
                         $cityAttraction = [];
                         $address = explode(',', $lead->headquater_address);
@@ -42,11 +57,9 @@
                         }
                     @endphp
                     <td>{{ $city }} </td>
-                    @if (count($cityAttraction) > 0)
-                    <td>{{ $cityAttraction->first()->attractions ?? '' }} </td>
-                    @else
-                    <td> </td>
-                    @endif
+                    <td>
+                        
+                    </td>
 
                 </tr>
                 @endforeach

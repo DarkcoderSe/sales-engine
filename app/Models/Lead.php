@@ -13,6 +13,7 @@ class Lead extends Model
 
     public $export_handler = \App\Exports\Lead::class;
     protected $perPage = 100;
+    public $allow_export_all = true;
 
     public function today()
     {
