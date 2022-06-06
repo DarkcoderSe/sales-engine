@@ -50,15 +50,15 @@
                         $cityAttraction = [];
                         $address = explode(',', $lead->headquater_address);
                         $city = isset($address[1]) ? $address[1] : null;
-                        if (!is_null($city)) {
-                            $cityAttraction = $cityAttractions->filter(function ($item) use ($city) {
-                                return false !== stristr($item->city, $city);
-                            });
-                        }
+                        // if (!is_null($city)) {
+                        //     $cityAttraction = $cityAttractions->filter(function ($item) use ($city) {
+                        //         return false !== stristr($item->city, $city);
+                        //     });
+                        // }
                     @endphp
                     <td>{{ $city }} </td>
                     <td>
-                        
+
                     </td>
 
                 </tr>
