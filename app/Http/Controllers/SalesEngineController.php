@@ -13,6 +13,9 @@ use App\Models\BdmLeadDeveloper;
 use App\Models\BdmLeadTechnology;
 use App\Models\User;
 
+use Illuminate\Support\Facades\Mail;
+use App\Mail\InterviewInvite;
+
 use Carbon\Carbon;
 
 use Toastr;
@@ -204,6 +207,27 @@ class SalesEngineController extends Controller
         $bdmLeadDeveloper->bdm_lead_id = $lead->id;
         $bdmLeadDeveloper->save();
 
+        try {
+            $dev = $bdmLeadDeveloper->developer;
+            $bdPersonEmail = auth()->user()->email;
+            if ($dev->name != 'BD Team') {
+
+                Mail::to($dev->email)
+                    ->cc([
+                        'kaleem@transdata.biz',
+                        'bd@trandata.biz',
+                        $bdPersonEmail
+                    ])
+                    ->queue(new InterviewInvite($bdPersonEmail));
+            }
+
+        } catch (\Throwable $th) {
+            dd($th);
+            Toastr::error('Email Invitation failed due to some error!');
+        }
+
+
+
         Toastr::success('Item has been updated successfully');
         return redirect('sales-engine/search');
     }
@@ -317,6 +341,25 @@ class SalesEngineController extends Controller
             'jobSources' => $jobSources,
             'bdms' => $bdms,
             'leads' => $leads
+        ]);
+    }
+
+    public function sendEmailInvite($leadId)
+    {
+
+        $developers = Developer::all();
+        $profiles = Profile::all();
+        $bdmLead = BdmLead::find($leadId);
+        $users = User::with('role')
+                ->whereHas('role', function($q) {
+                    return $q->whereIn('name', ['super-admin', 'bdm']);
+                })->get();
+
+        return view('sales-engine.invite')->with([
+            'bdmLead' => $bdmLead,
+            'developers' => $developers,
+            'profiles' => $profiles,
+            'users' => $users
         ]);
     }
 }

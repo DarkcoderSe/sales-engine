@@ -42,7 +42,9 @@ Route::prefix('sales-engine')->middleware(['auth', 'role:bdm'])->name('sales-eng
     Route::post('report-search', 'SalesEngineController@searchReport')->name('report-search');
     Route::get('reports', 'SalesEngineController@report')->name('reports');
 
-
+    // invitation email routes
+    Route::get('send-invite/{id}', 'SalesEngineController@sendEmailInvite')->name('send.invite');
+    Route::post('send-invite', 'SalesEngineController@submitEmailInvite')->name('submit.invite');
 
     Route::post('search', 'SalesEngineController@result')->name('result');
     Route::post('submit', 'SalesEngineController@submit')->name('submit');

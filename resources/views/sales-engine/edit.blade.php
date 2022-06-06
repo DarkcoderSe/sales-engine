@@ -293,7 +293,9 @@
 				</div>
 			</div>
 
+
 			<div class="text-right mt-2 mb-4">
+				<a href="{{ route('sales-engine.send.invite', $bdmLead->id) }}" class="btn btn-success waves-effect waves-light">Send an Invite</a>
 				<button type="submit" class="btn btn-primary waves-effect waves-light">Update Item</button>
 			</div>
 	</div>
