@@ -203,6 +203,7 @@
                                     <option value="devops">DevOps</option>
                                     <option value="machine-learning">Machine Learning</option>
                                     <option value="blockchain">BlockChain</option>
+                                    <option value="python">Python</option>
                                 </select>
 
                                 @if ($errors->any('job_type'))
