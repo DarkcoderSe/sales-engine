@@ -16,6 +16,10 @@ use TCG\Voyager\Events\BreadImagesDeleted;
 use TCG\Voyager\Facades\Voyager;
 use TCG\Voyager\Http\Controllers\Traits\BreadRelationshipParser;
 
+use Carbon\Carbon;
+use App\Exports\Lead;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 class LeadController extends \TCG\Voyager\Http\Controllers\VoyagerBaseController
 {
@@ -89,6 +93,8 @@ class LeadController extends \TCG\Voyager\Http\Controllers\VoyagerBaseController
                 }
             }
 
+
+
             // If a column has a relationship associated with it, we do not want to show that field
             $this->removeRelationshipField($dataType, 'browse');
 
@@ -108,6 +114,13 @@ class LeadController extends \TCG\Voyager\Http\Controllers\VoyagerBaseController
                     }
                 }
             }
+
+            if ($request->get('export') == true) {
+                // dd($query->get());
+                $date = Carbon::now();
+                return Excel::download(new Lead($query->get()), "leads-{$date}.xlsx");
+            }
+
 
             $row = $dataType->rows->where('field', $orderBy)->firstWhere('type', 'relationship');
             if ($orderBy && (in_array($orderBy, $dataType->fields()) || !empty($row))) {
