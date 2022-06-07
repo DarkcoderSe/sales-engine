@@ -207,24 +207,24 @@ class SalesEngineController extends Controller
         $bdmLeadDeveloper->bdm_lead_id = $lead->id;
         $bdmLeadDeveloper->save();
 
-        try {
-            $dev = $bdmLeadDeveloper->developer;
-            $bdPersonEmail = auth()->user()->email;
-            if ($dev->name != 'BD Team') {
+        // try {
+        //     $dev = $bdmLeadDeveloper->developer;
+        //     $bdPersonEmail = auth()->user()->email;
+        //     if ($dev->name != 'BD Team') {
 
-                Mail::to($dev->email)
-                    ->cc([
-                        'kaleem@transdata.biz',
-                        'bd@trandata.biz',
-                        $bdPersonEmail
-                    ])
-                    ->queue(new InterviewInvite($bdPersonEmail));
-            }
+        //         Mail::to($dev->email)
+        //             ->cc([
+        //                 'kaleem@transdata.biz',
+        //                 'bd@trandata.biz',
+        //                 $bdPersonEmail
+        //             ])
+        //             ->queue(new InterviewInvite($bdPersonEmail));
+        //     }
 
-        } catch (\Throwable $th) {
-            dd($th);
-            Toastr::error('Email Invitation failed due to some error!');
-        }
+        // } catch (\Throwable $th) {
+        //     dd($th);
+        //     Toastr::error('Email Invitation failed due to some error!');
+        // }
 
 
 

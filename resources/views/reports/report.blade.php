@@ -113,8 +113,8 @@
                             <select name="status" class="form-control">
                                 <option value="-1" {{ request()->get('status') == '-1' ? 'selected' : '' }}>Any</option>
                                 <option value="0" {{ request()->get('status') == '0' ? 'selected' : '' }}>Prospect</option>
-                                <option value="1" {{ request()->get('status') == '1' ? 'selected' : '' }}>Warm Head</option>
-                                <option value="2" {{ request()->get('status') == '2' ? 'selected' : '' }}>Cold Head</option>
+                                <option value="1" {{ request()->get('status') == '1' ? 'selected' : '' }}>Warm Lead</option>
+                                <option value="2" {{ request()->get('status') == '2' ? 'selected' : '' }}>Cold Lead</option>
                                 <option value="3" {{ request()->get('status') == '3' ? 'selected' : '' }}>Hired</option>
                                 <option value="4" {{ request()->get('status') == '4' ? 'selected' : '' }}>Rejected</option>
                             </select>
@@ -260,9 +260,9 @@
                                 @if ($lead->status == 0)
                                 Prospect
                                 @elseif ($lead->status == 1)
-                                Warm Head
+                                Warm Lead
                                 @elseif ($lead->status == 2)
-                                Cold Head
+                                Cold Lead
                                 @elseif ($lead->status == 3)
                                 Hired
                                 @elseif ($lead->status == 4)

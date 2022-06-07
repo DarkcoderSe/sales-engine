@@ -31,6 +31,8 @@
 										<th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" style="width: 178px;" aria-label="Office: activate to sort column ascending">Tech Stack</th>
 										<th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" style="width: 95px;" aria-label="Age: activate to sort column ascending">Created At</th>
 										<th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" style="width: 168px;" aria-label="Start date: activate to sort column ascending">Status</th>
+										<th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" style="width: 168px;" aria-label="Start date: activate to sort column ascending">Assigned To</th>
+										<th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" style="width: 168px;" aria-label="Start date: activate to sort column ascending">Notes</th>
 
 									</tr>
 								</thead>
@@ -67,6 +69,12 @@
                                             @elseif ($lead->status == 4)
                                             Rejected
                                             @endif
+                                        </td>
+                                        <td>
+                                            {{ $lead->developer->developer->name ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $lead->notes ?? 'N/A' }}
                                         </td>
 									</tr>
                                     @endforeach
