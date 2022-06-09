@@ -43,8 +43,16 @@
             <div class="card">
                 <div class="card-body">
 
-                    <h4 class="card-title">Reports Section:</h4>
-                    <p class="card-title-desc">Fill all information below</p>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4 class="card-title">Reports Section:</h4>
+                            <p class="card-title-desc">Fill all information below</p>
+                        </div>
+                        <div class="col-md-6 text-right">
+                            <h4>Total Records Added Today (So far): {{ count(\App\Models\BdmLead::today()) }} </h4>
+                        </div>
+                    </div>
+
                     <div class="row">
                         <div class="col-md-8">
                             <label>Serach</label>
@@ -175,24 +183,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <div class="custom-control custom-switch mb-3" dir="ltr">
-                                    <input type="checkbox" name="historical_data" class="custom-control-input" id="customSwitch1" >
-                                    <label class="custom-control-label" for="customSwitch1">Filter leads based on historical data</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <div class="custom-control custom-switch mb-3" dir="ltr">
-                                    <input type="checkbox" name="due_dates" class="custom-control-input" id="customSwitch2" >
-                                    <label class="custom-control-label" for="customSwitch2">Filter leads based on over due dates</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
 
@@ -215,10 +205,10 @@
         <h3>Total Filtered Records: {{ count($leads) }} </h3>
     </div>
     <div class="col-md-5 text-right">
-        <h3>Total Records Added Today (So far): {{ count(\App\Models\BdmLead::today()) }} </h3>
+        <a href="{{ URL::to(request()->fullUrl() . '&export=true') }}" class="btn btn-primary">Export</a>
     </div>
 </div>
-<div class="row justify-content-center">
+<div class="row justify-content-center mt-2">
     <div class="col-10 col-md-10 pb-4 mb-4">
 
         <div class="card">
@@ -235,12 +225,13 @@
                             <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" style="width: 168px;" aria-label="Start date: activate to sort column ascending">Status</th>
                             <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" style="width: 178px;" aria-label="Office: activate to sort column ascending">Agent (BD) </th>
                             <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" style="width: 178px;" aria-label="Office: activate to sort column ascending">Tech Stack </th>
+                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" style="width: 178px;" aria-label="Office: activate to sort column ascending">Notes </th>
 
                         </tr>
                     </thead>
                     <tbody id="search-row">
                         @foreach ($leads as $lead)
-                        <tr role="row">
+                        <tr role="row" class="{{ $lead->status == 4 ? 'bg-danger text-white' : '' }}">
                             <td>
                                 {{ $lead->created_at->diffForHumans() }} <br>
                                 <span class="small text-muted">
@@ -276,6 +267,9 @@
                                     {{ $technology->name ?? '' }}
                                 </span>
                                 @endforeach
+                            </td>
+                            <td>
+                                {{ $lead->notes }}
                             </td>
                         </tr>
                         @endforeach

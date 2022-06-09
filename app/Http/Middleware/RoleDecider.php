@@ -16,7 +16,7 @@ class RoleDecider
      */
     public function handle(Request $request, Closure $next, $role)
     {
-        if (auth()->check() && auth()->user()->hasRole($role)) {
+        if (auth()->check() && (auth()->user()->hasRole($role) || auth()->user()->hasRole('super-admin') || auth()->user()->hasRole('developer'))) {
             return $next($request);
         }
 

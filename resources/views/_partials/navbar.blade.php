@@ -31,25 +31,17 @@
                             <i class="bx bx-pyramid mr-2"></i> My Items
                         </a>
                     </li>
-                    @elseif (auth()->user()->hasRole('bdm'))
+                    @elseif (auth()->user()->hasRole('bdm') || auth()->user()->hasRole('superadmin') || auth()->user()->hasRole('developer'))
                     <li class="nav-item">
                         <a href="{{ route('sales-engine.create') }}" class="nav-link">
                             <i class='bx bx-plus-circle mr-2'></i> Add Item
                         </a>
                     </li>
-                            <li class="nav-item">
+                    <li class="nav-item">
                         <a href="{{ route('sales-engine.reports') }}" class="nav-link">
                             <i class='bx bxs-report mr-2'></i> Reports
                         </a>
                     </li>
-
-                    @elseif (auth()->user()->hasRole('superadmin'))
-                    <li class="nav-item">
-                        <a href="{{ URL::to('admin') }}" class="nav-link">
-                            <i class="bx bx-pyramid mr-2"></i> Admin Panel
-                        </a>
-                    </li>
-                    @elseif (auth()->user()->hasRole('developer'))
                     <li class="nav-item">
                         <a href="{{ URL::to('admin') }}" class="nav-link">
                             <i class="bx bx-pyramid mr-2"></i> Admin Panel

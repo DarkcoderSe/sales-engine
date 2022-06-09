@@ -16,6 +16,9 @@ use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\InterviewInvite;
 
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\BdmLead as BdmLeadExport;
+
 use Carbon\Carbon;
 
 use Toastr;
@@ -316,7 +319,7 @@ class SalesEngineController extends Controller
         }
 
         if ($technology != -1) {
-            $leads = $leads->with('technologies')->whereHas('technologies', function ($q) use ($technology) {
+            $leads = $leads->with(['technologies', 'techs'])->whereHas('technologies', function ($q) use ($technology) {
                 return $q->where('technology_id', $technology);
             });
         }
@@ -327,11 +330,14 @@ class SalesEngineController extends Controller
             });
         }
 
+
+        if ($request->get('export') == true) {
+            $leads = $leads->orderBy('created_at', 'DESC')->get();
+            $date = Carbon::now();
+            return Excel::download(new BdmLeadExport($leads), "bdm-leads-{$date}.xlsx");
+        }
+
         // dd($leads->first()->techs);
-
-
-
-
         $leads = $leads->orderBy('created_at', 'DESC')->paginate(30);
 
         return view('reports.report')->with([
@@ -362,4 +368,5 @@ class SalesEngineController extends Controller
             'users' => $users
         ]);
     }
+
 }
