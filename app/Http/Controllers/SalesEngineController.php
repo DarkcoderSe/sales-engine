@@ -12,6 +12,7 @@ use App\Models\Developer;
 use App\Models\BdmLeadDeveloper;
 use App\Models\BdmLeadTechnology;
 use App\Models\User;
+use App\Models\InterviewInvite as InterviewModel;
 
 use Illuminate\Support\Facades\Mail;
 use App\Mail\InterviewInvite;
@@ -210,24 +211,6 @@ class SalesEngineController extends Controller
         $bdmLeadDeveloper->bdm_lead_id = $lead->id;
         $bdmLeadDeveloper->save();
 
-        // try {
-        //     $dev = $bdmLeadDeveloper->developer;
-        //     $bdPersonEmail = auth()->user()->email;
-        //     if ($dev->name != 'BD Team') {
-
-        //         Mail::to($dev->email)
-        //             ->cc([
-        //                 'kaleem@transdata.biz',
-        //                 'bd@trandata.biz',
-        //                 $bdPersonEmail
-        //             ])
-        //             ->queue(new InterviewInvite($bdPersonEmail));
-        //     }
-
-        // } catch (\Throwable $th) {
-        //     dd($th);
-        //     Toastr::error('Email Invitation failed due to some error!');
-        // }
 
 
 
@@ -337,7 +320,7 @@ class SalesEngineController extends Controller
             return Excel::download(new BdmLeadExport($leads), "bdm-leads-{$date}.xlsx");
         }
 
-        // dd($leads->first()->techs);
+        $totalLeads = $leads->count();
         $leads = $leads->orderBy('created_at', 'DESC')->paginate(30);
 
         return view('reports.report')->with([
@@ -346,7 +329,8 @@ class SalesEngineController extends Controller
             'developers' => $developers,
             'jobSources' => $jobSources,
             'bdms' => $bdms,
-            'leads' => $leads
+            'leads' => $leads,
+            'totalLeads' => $totalLeads
         ]);
     }
 
@@ -356,6 +340,8 @@ class SalesEngineController extends Controller
         $developers = Developer::all();
         $profiles = Profile::all();
         $bdmLead = BdmLead::find($leadId);
+        $techs = Technology::all();
+
         $users = User::with('role')
                 ->whereHas('role', function($q) {
                     return $q->whereIn('name', ['super-admin', 'bdm']);
@@ -365,8 +351,54 @@ class SalesEngineController extends Controller
             'bdmLead' => $bdmLead,
             'developers' => $developers,
             'profiles' => $profiles,
-            'users' => $users
+            'users' => $users,
+            'techs' => $techs
         ]);
+    }
+
+    public function submitEmailInvite(Request $request)
+    {
+        // dd($request->all());
+        try {
+
+            $dev = Developer::findOrFail($request->get('developer'));
+
+            $bdPersonEmail = auth()->user()->email;
+
+
+            $interview = new InterviewModel;
+            $interview->event_start_at = "{$request->get('event_start_date')} {$request->get('event_start_time')}";
+            $interview->event_timezone = $request->get('event_timezone');
+            $interview->event_duration = $request->get('event_duration');
+            $interview->title = $request->get('title');
+            $interview->location = $request->get('location');
+            $interview->interview_mode = $request->get('interview_mode');
+            $interview->interview_link = $request->get('interview_link');
+            $interview->client_name = $request->get('client_name');
+            $interview->client_organization = $request->get('client_organization');
+            $interview->position = $request->get('position');
+            $interview->salary_range = $request->get('salary_name');
+            $interview->notes = $request->get('notes');
+            $interview->receiver_id = $dev->id;
+            $interview->profile_id = $request->get('profile');
+            $interview->sender_id = auth()->user()->id;
+            $interview->bdm_lead_id = $request->get('bdm_lead_id');
+            $interview->save();
+
+            if ($dev->name != 'BD Team' && !is_null($dev->email)) {
+
+                Mail::to($dev->email)
+                    ->cc($request->get('cc_emails'))
+                    ->queue(new InterviewInvite($bdPersonEmail, $interview));
+            }
+
+        } catch (\Throwable $th) {
+            dd($th);
+            Toastr::error('Email Invitation failed due to some error!');
+        }
+
+        return "Email sent!";
+
     }
 
 }

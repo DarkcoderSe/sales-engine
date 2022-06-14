@@ -35,6 +35,7 @@ class CreateInterviewInvitesTable extends Migration
             $table->string('position')->nullable();
             $table->string('salary_range')->nullable();
             $table->text('notes')->nullable();
+            $table->integer('status')->default(0);
 
             $table->timestamps();
         });

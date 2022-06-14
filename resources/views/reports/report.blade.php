@@ -196,13 +196,14 @@
     </div>
 </div>
 
+
 @isset($leads)
 
 @if (count($leads) > 0)
 
 <div class="row justify-content-center">
     <div class="col-md-5">
-        <h3>Total Filtered Records: {{ count($leads) }} </h3>
+        <h3>Total Filtered Records: {{ $totalLeads ?? 0 }} </h3>
     </div>
     <div class="col-md-5 text-right">
         <a href="{{ URL::to(request()->fullUrl() . '&export=true') }}" class="btn btn-primary">Export</a>

@@ -1,0 +1,81 @@
+BEGIN:VCALENDAR
+PRODID:-//Google Inc//Google Calendar 70.9054//EN
+VERSION:2.0
+CALSCALE:GREGORIAN
+METHOD:REQUEST
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20220611T145900Z
+DTEND;TZID=America/New_York:20220611T152900Z
+DTSTAMP;TZID=America/New_York:20220610T135955Z
+UID:20220610T135955-453287365@transdata.biz
+ORGANIZER;CN=Syed Imran Ahmed :imran.ahmed@transdata.biz
+CREATED:20220610T135955Z
+PROFILE:Uzair
+INTERVIEW_MODE:Zoom
+INTERVIEW_LINK:http://islam.com/?sgfs
+NOTES:Nothing discussed yet!
+DESCRIPTION:Key Responsibilities
+
+OVERVIEW
+
+This position is somewhat flexible given the candidates experience, the main requirement being some DevOps experience. What do we mean by DevOps? Mostly npm, publishing node modules, Bash, husky, using a prettier/linter, setting up scss, debugging CircleCI build errors, and building testing frameworks (Jest).
+
+We think DevOps will usually only take up about ¼ of your time with the remainder going to full-stack development. The development piece is also somewhat flexible based on your experience. If you lean front-end that’s fine, if you prefer the backend - great!
+
+The primary responsibilities are to architect and implement new features for our live / virtual event app software (React Native app and React webapp), our admin panel (React), and the backend (Go). The digital team is small, so you will wear a lot of hats. You would be a resource for any questions our two strong junior developers may have. In addition to the core app used at events, we produce many one-off interactive experiences (React w Node backends) – these are a great opportunity to work on touchscreens, broadcast video, mini games, and other cool tactics.
+
+We are looking for developers with at least 4 years of professional experience (the more the better). You must be able to jump in and write code that is clear and reusable, and should be largely self-directed and self-driven in your work. We are looking for someone who has a solid understanding of building well-structured backends/APIs and making decisions that will help our products and our codebase thrive. Any experience writing in Go/Gorm is a serious plus, but there is an opportunity to learn here. What do you bring to the table? Let us know!
+
+ABOUT BLUEPRINT NYC
+
+Who are we? At BlueprintNYC we produce live and virtual corporate events, experiential marketing, and other immersive learning experiences that put attendees in the driver’s seat. Our live and virtual tactics can include event apps, touchscreens, educational games, virtual training, AR, and more. We develop new creative solutions every day.
+
+OUR CURRENT TECHNOLOGIES
+
+React, Redux, Node, GraphQL, Go/Golang, MySQL, CircleCI, GCP, Git
+
+OUR DEVOPS TECHNOLOGIES
+
+npm, node, Bash, husky, prettier, linter, Jest, scss, Docker, webpack, fastlane, Bitrise
+
+SKILLS & QUALIFICATIONS
+
+Professional experience supporting development with various DevOps tools.
+
+Experience building production-ready web-based products or apps.
+
+Understanding of software development best-practices.
+
+Experience with agile/scrum development.
+
+Excellent written and verbal communication.
+
+Technical qualifications
+
+4+ years professional experience building complex web and mobile applications
+
+3+ years professional React and/or React Native experience
+
+3+ years professional Node experience
+
+2+ years professional DevOps experience
+
+Nice to haves
+
+Experience building REST APIs with Go and GraphQL (or Node)
+
+Experience with Docker / Webpack
+
+Experience with Google Cloud and/or CircleCI
+
+Experience with fastlane or Bitrise
+
+Experience writing MySQL queries
+LAST-MODIFIED:20220610T135955Z
+LOCATION:Office
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:1st Call - Interview Invite
+TRANSP:OPAQUE
+END:VEVENT
+END:VCALENDAR

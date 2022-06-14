@@ -1,8 +1,8 @@
 @component('mail::message')
 # Interview Invitation
 
-The body of your message.
+You have been inviated for an Interview. Please see the attachments.
 
 Thanks,<br>
-{{ config('app.name') }}
+Sales Engine TransData
 @endcomponent
