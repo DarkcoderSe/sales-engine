@@ -23,6 +23,8 @@
                     <th>Email Address</th>
                     <th>Email Status</th>
                     <th>HQ City</th>
+                    <th>State</th>
+                    <th>Timezone</th>
                     <th>Attractions</th>
 
                 </tr>
@@ -30,37 +32,25 @@
             <tbody>
                 @foreach ($leads as $lead)
                 <tr>
-                    <td>{{ $lead->company_name }} </td>
-                    <td>{{ $lead->company_linkedin_url }} </td>
-                    {{-- <td>{{ $lead->company_url }} </td> --}}
-                    <td>{{ $lead->job_type }} </td>
-                    <td>{{ $lead->job_source_url }} </td>
-                    <td>{{ $lead->job_description }} </td>
+                    <td>{{ $lead['company_name'] }} </td>
+                    <td>{{ $lead['company_linkedin_url'] }} </td>
+                    <td>{{ $lead['job_type'] }} </td>
+                    <td>{{ $lead['job_source_url'] }} </td>
+                    <td>{{ $lead['job_description'] }} </td>
                     <td>
-                        {{ explode(" ", $lead->contact_name)[0] ?? $lead->contact_name }}
+                        {{ $lead['first_name'] }}
                     </td>
                     <td>
-                        {{ explode(" ", $lead->contact_name)[1] ?? $lead->contact_name }}
+                        {{ $lead['last_name'] }}
                     </td>
-                    <td>{{ $lead->linkedin_profile }} </td>
-                    <td>{{ $lead->job_title }} </td>
-                    <td>{{ $lead->email }} </td>
-                    <td>{{ $lead->email_status ? 'CATCHALL' : 'VALID'  }} </td>
-                    @php
-                        $cityAttraction = [];
-                        $address = explode(',', $lead->headquater_address);
-                        $city = isset($address[1]) ? $address[1] : null;
-                        // if (!is_null($city)) {
-                        //     $cityAttraction = $cityAttractions->filter(function ($item) use ($city) {
-                        //         return false !== stristr($item->city, $city);
-                        //     });
-                        // }
-                    @endphp
-                    <td>{{ $city }} </td>
-                    <td>
-
-                    </td>
-
+                    <td>{{ $lead['linkedin_profile'] }} </td>
+                    <td>{{ $lead['job_title'] }} </td>
+                    <td>{{ $lead['email'] }} </td>
+                    <td>{{ $lead['email_status'] }} </td>
+                    <td>{{ $lead['city'] }} </td>
+                    <td>{{ $lead['state'] }} </td>
+                    <td>{{ $lead['timezone'] }}</td>
+                    <td>{{ $lead['attractions'] }} </td>
                 </tr>
                 @endforeach
             </tbody>

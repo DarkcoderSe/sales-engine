@@ -194,6 +194,7 @@
                             <div class="form-group">
                                 <label>Job Type <span class="text-danger">*</span></label>
                                 <select name="job_type" class="custom-select">
+                                    <option value="full-stack">Full Stack</option>
                                     <option value="php">PHP</option>
                                     <option value="react-js">React JS</option>
                                     <option value="angular-js">Angular JS</option>
