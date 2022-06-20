@@ -12,7 +12,7 @@ use App\Models\Technology;
 use Toastr;
 
 use App\Traits\Organization;
-
+use DB;
 use Carbon\Carbon;
 
 class LeadController extends Controller
@@ -48,7 +48,8 @@ class LeadController extends Controller
             'linkedin_profile' => 'required|url',
             'company_linkedin_url' => 'required|url',
             'job_type' => 'required|string',
-            'job_description' => 'required|string'
+            'job_description' => 'required|string',
+            'job_class' => 'required|string'
         ]);
 
 
@@ -71,21 +72,29 @@ class LeadController extends Controller
         $lead->job_description = $request->get('job_description');
         $lead->email_status = $request->get('email_status');
         $lead->job_type = $request->get('job_type');
+        $lead->job_class = $request->get('job_class');
         $lead->added_by = auth()->user()->id;
         $lead->save();
 
         try {
             // https://www.linkedin.com/company/transdata-international
             $url = explode('/', $lead->company_linkedin_url);
+            $timeObj = $this->getTimezoneByZipcode($url[4] ?? '');
             $lead->headquater_address = $this->lookup($url[4] ?? '');
+            $lead->timezone = $timeObj->source;
             $lead->save();
+
+
         } catch (\Throwable $th) {
-            //throw $th;
+            throw $th;
+            Toastr::error('Something went wrong!');
         }
 
         Toastr::success('Lead added successfully');
         return redirect()->back();
 
     }
+
+
 
 }

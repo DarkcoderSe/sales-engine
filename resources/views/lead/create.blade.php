@@ -252,7 +252,27 @@
                         </div>
                     </div>
 
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Job Class <span class="text-danger">*</span></label>
+                                <select name="job_class" class="custom-select" required>
+                                    <option value="full-time">
+                                        Fulltime
+                                    </option>
+                                    <option value="contract">
+                                        Contract
+                                    </option>
+                                </select>
 
+                                @if ($errors->any('job_class'))
+                                <span class="text-danger small">
+                                    {{ $errors->first('job_class') }}
+                                </span>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
 
                 </div>
             </div>

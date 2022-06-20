@@ -69,7 +69,9 @@ class SalesEngineController extends Controller
     {
         $query = $request->get('query');
 
-        $bdmLeads = BdmLead::where('company_name', 'LIKE', "%{$query}%")->orderBy('created_at', 'DESC')->with('techs')->limit(30)->get();
+        $bdmLeads = BdmLead::where('company_name', 'LIKE', "%{$query}%")
+                            ->orWhere('job_title', 'LIKE', "%{$query}%")
+                            ->orderBy('created_at', 'DESC')->with('techs')->limit(30)->get();
 
         return view('sales-engine.result')->with([
             'bdmLeads' => $bdmLeads

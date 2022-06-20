@@ -9,9 +9,11 @@ use App\Models\CityAttraction;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use App\Traits\Organization;
 
 class Lead implements FromView, WithStyles, ShouldAutoSize
 {
+    use Organization;
     public $leads;
     /**
     * @return \Illuminate\Support\Collection
@@ -31,15 +33,28 @@ class Lead implements FromView, WithStyles, ShouldAutoSize
 
             $cityAttraction = [];
             $address = explode(',', $item['headquater_address']);
-            $city = trim($address[1]) ?? '';
+            // dd($address);
+            $city = trim($address[1] ?? '');
             $state = $address[2] ?? '';
             $attractions = "";
-            $timezone = "";
+            $timezone = $item['timezone'];
 
             $cta = CityAttraction::where('city', $city)->first();
             if (!is_null($cta)) {
                 $attractions = $cta->attractions;
                 $state = $cta->state;
+            }
+
+            if (is_null($timezone)) {
+                try {
+                    $url = explode('/', $lead['company_linkedin_url']);
+                    $timeObj = $this->getTimezoneByZipcode($url[4] ?? '');
+                    $timezone = $timeObj->source;
+                    $state = $timeObj->state;
+
+                } catch (\Throwable $th) {
+                    //throw $th;
+                }
             }
 
             return [
@@ -58,7 +73,8 @@ class Lead implements FromView, WithStyles, ShouldAutoSize
                 'city' => $city,
                 'state' => $state,
                 'timezone' => $timezone,
-                'attractions' => $attractions
+                'attractions' => $attractions,
+                'job_class' => $item['job_class']
             ];
         });
 

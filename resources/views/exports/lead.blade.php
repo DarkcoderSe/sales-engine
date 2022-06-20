@@ -13,6 +13,7 @@
                     <th>Company Name</th>
                     <th>Company LinkedIn Profile</th>
                     {{-- <th>Company Website URL</th> --}}
+                    <th>Job Type</th>
                     <th>Platform</th>
                     <th>Job Source</th>
                     <th>Job Description</th>
@@ -34,6 +35,7 @@
                 <tr>
                     <td>{{ $lead['company_name'] }} </td>
                     <td>{{ $lead['company_linkedin_url'] }} </td>
+                    <td>{{ $lead['job_class'] }} </td>
                     <td>{{ $lead['job_type'] }} </td>
                     <td>{{ $lead['job_source_url'] }} </td>
                     <td>{{ $lead['job_description'] }} </td>

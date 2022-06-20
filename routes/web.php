@@ -25,7 +25,6 @@ Route::prefix('lead')->middleware(['auth', 'role:agent'])->name('lead.')->group(
     Route::get('/', 'LeadController@index')->name('index');
     Route::get('create', 'LeadController@create')->name('create');
     Route::post('submit', 'LeadController@submit')->name('submit');
-
 });
 
 Route::post('job-source/submit', 'IndexController@jobSourceSubmit')->name('job-source.submit');

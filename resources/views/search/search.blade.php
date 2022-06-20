@@ -3,7 +3,7 @@
 @section('title', 'Add new Lead')
 
 @section('content')
-<style> 
+<style>
 .select2-container--default .select2-selection--single {
     background-color: #fff;
     border: 1px solid #ced4da;
@@ -51,16 +51,16 @@
                     <div class="row no-gutters">
 					<div class="col-md-10 align-self-center">
 						<div class="form-group">
-							<label>Company Name: </label>
+							<label>Company Name / Job Title: </label>
 							<input type="text" class="form-control addToListField"> </div>
 					</div>
 					<div class="col-md-2 align-self-center cstmSpaceBtn">
 						<button type="button" class="btn btn-primary addToListBtn">Search</button>
 					</div>
 				</div>
-                        
-                </div>    
-        </div>  
+
+                </div>
+        </div>
             </div>
 
 

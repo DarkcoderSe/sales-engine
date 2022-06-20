@@ -64,7 +64,7 @@
                                     <div class="row no-gutters">
                                         <div class="col-md-10 align-self-center">
                                             <div class="form-group">
-                                                <label>Company Name: </label>
+                                                <label>Company Name / Job Title: </label>
                                                 <input type="text" name="query" class="form-control addToListField" placeholder="i.e: TransData"> </div>
                                             @if ($errors->any('query'))
                                                 <span class="small text-danger">
