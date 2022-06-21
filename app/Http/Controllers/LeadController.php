@@ -81,7 +81,7 @@ class LeadController extends Controller
             $url = explode('/', $lead->company_linkedin_url);
             $timeObj = $this->getTimezoneByZipcode($url[4] ?? '');
             $lead->headquater_address = $this->lookup($url[4] ?? '');
-            $lead->timezone = $timeObj->source;
+            $lead->timezone = $timeObj->source ?? '';
             $lead->save();
 
 
