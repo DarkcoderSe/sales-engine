@@ -43,11 +43,17 @@ trait Organization
 
     public function getTimezoneByZipcode($vanityName)
     {
-        $organization = $this->detailLookup($vanityName);
-        $loc = $organization->elements[0]->locations[0] ?? [];
-        $postalCode = $loc->address->postalCode;
+        try {
+            $organization = $this->detailLookup($vanityName);
+            $loc = $organization->elements[0]->locations[0] ?? [];
+            $postalCode = $loc->address->postalCode ?? '';
 
-        $timeObj = DB::select('select * from timezonebyzipcode where zip = ?', [$postalCode]);
-        return $timeObj[0];
+            if (!is_null($postalCode)) {
+                $timeObj = DB::select('select * from timezonebyzipcode where zip = ?', [$postalCode]);
+                return $timeObj[0];
+            }
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
     }
 }
