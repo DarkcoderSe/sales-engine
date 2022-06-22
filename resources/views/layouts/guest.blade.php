@@ -15,6 +15,11 @@
 
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}" defer></script>
+        <style>
+            body {
+                background-color: #000000 !important;
+            }
+        </style>
     </head>
     <body>
         <div class="font-sans text-gray-900 antialiased">

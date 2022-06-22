@@ -17,9 +17,6 @@ Route::get('/', function () {
     return view('index');
 });
 
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth'])->name('dashboard');
 
 Route::prefix('lead')->middleware(['auth', 'role:agent'])->name('lead.')->group(function() {
     Route::get('/', 'LeadController@index')->name('index');
