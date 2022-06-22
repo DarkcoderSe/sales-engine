@@ -246,6 +246,32 @@
 						</div>
 					</div>
 
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" name="email" class="form-control" value="{{ old('email') }}">
+                                @if ($errors->any('email'))
+                                <span class="text-danger small">
+                                    {{ $errors->first('email') }}
+                                </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Phone Number</label>
+                                <input type="text" name="phone_no" class="form-control" value="{{ old('phone_no') }}">
+                                @if ($errors->any('phone_no'))
+                                <span class="text-danger small">
+                                    {{ $errors->first('phone_no') }}
+                                </span>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+
+
 					<h4 class="card-title mt-2">About Team</h4>
 					<p class="card-title-desc">All Information below:</p>
 					<div class="table-responsive">
@@ -255,8 +281,8 @@
                                 <tr>
                                     <th></th>
                                     <th>Assigned To</th>
-                                    <th>Fit for</th>
-                                    <th>PM</th>
+                                    <th>Email</th>
+                                    <th>Phone Number</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -269,8 +295,8 @@
                                         <input type="radio" name="developer" value="{{ $developer->id }}" {{ $loop->first ? 'checked' : '' }}>
                                     </th>
                                     <td>{{ $developer->name }}</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
+                                    <td>{{ $developer->email ?? '' }}</td>
+                                    <td>{{ $developer->phone_number ?? '' }}</td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -278,6 +304,7 @@
                     </div>
 				</div>
 			</div>
+
 
 			<div class="text-right mt-2 mb-4">
 				<button type="submit" class="btn btn-primary waves-effect waves-light">Add Item</button>

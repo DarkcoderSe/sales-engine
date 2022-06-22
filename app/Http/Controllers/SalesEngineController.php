@@ -94,7 +94,9 @@ class SalesEngineController extends Controller
             'cover_letter' => 'nullable|mimes:pdf,docx',
             'job_description' => 'nullable|string',
             'developer' => 'required|numeric',
-            'job_source_url' => 'nullable|url'
+            'job_source_url' => 'nullable|url',
+            'email' => 'email|nullable',
+            'phone_no' => 'string|nullable'
         ]);
 
         $lead = new BdmLead;
@@ -109,6 +111,8 @@ class SalesEngineController extends Controller
         $lead->status_changed = Carbon::now();
         $lead->phase = $request->get('phase');
         $lead->phase_changed_at = Carbon::now();
+        $lead->phone_no = $request->get('phone_no');
+        $lead->email = $request->get('email');
         // $lead->resume = $request->get('resume');
         // $lead->cover_letter = $request->get('cover_letter');
         $lead->notes = $request->get('notes');
@@ -167,7 +171,9 @@ class SalesEngineController extends Controller
             'cover_letter' => 'nullable|mimes:pdf,docx',
             'job_description' => 'nullable|string',
             'developer' => 'required|numeric',
-            'job_source_url' => 'nullable|url'
+            'job_source_url' => 'nullable|url',
+            'email' => 'email|nullable',
+            'phone_no' => 'string|nullable'
         ]);
 
         $lead = BdmLead::find($request->get('itemId'));
@@ -183,6 +189,8 @@ class SalesEngineController extends Controller
         $lead->phase = $request->get('phase');
         $lead->notes = $request->get('notes');
         $lead->phase_changed_at = Carbon::now();
+        $lead->phone_no = $request->get('phone_no');
+        $lead->email = $request->get('email');
         // $lead->resume = $request->get('resume');
         // $lead->cover_letter = $request->get('cover_letter');
         if ($request->hasFile('resume')) {

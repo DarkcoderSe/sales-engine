@@ -68,6 +68,7 @@ class InterviewInvite extends Mailable
 		$mail[16] = "DESCRIPTION:" . $description;
 		$mail[17] = "LAST-MODIFIED:" . $todaystamp;
 		$mail[18] = "LOCATION:" . $location;
+		$mail[18] = "ABC:regio";
 		$mail[19] = "SEQUENCE:0";
 		$mail[20] = "STATUS:CONFIRMED";
 		$mail[21] = "SUMMARY:" . $titulo_invite;
