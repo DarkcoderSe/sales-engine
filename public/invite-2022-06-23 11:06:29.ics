@@ -1,0 +1,43 @@
+BEGIN:VCALENDAR
+PRODID:-//Google Inc//Google Calendar 70.9054//EN
+VERSION:2.0
+CALSCALE:GREGORIAN
+METHOD:REQUEST
+BEGIN:VEVENT
+DTSTART;TZID=Asia/Karachi:20220624T150700Z
+DTEND;TZID=Asia/Karachi:20220624T153700Z
+DTSTAMP;TZID=Asia/Karachi:20220623T110629Z
+UID:20220623T110629-27875649@transdata.biz
+ORGANIZER;CN=Kashif Saleem :darkcoder1996@gmail.com
+CREATED:20220623T110629Z
+PROFILE:Awais Javed
+INTERVIEW_MODE:Zoom
+INTERVIEW_LINK:http://islam.com/?sgfs
+NOTES:
+DESCRIPTION:We are looking for a Private Equity Associate to join our team and work with our clients to ensure they receive the highest return for their investment.
+
+Private Equity Associate responsibilities include analyzing market trends to understand how to best invest on behalf of their clients. 
+
+Ultimately, you will work directly with clients to understand their needs and provide them with direction on how to invest to maximize their returns.
+Responsibilities
+
+    Draft and present internal proposals for approval by our organization’s Investment Committee and Board
+    Negotiate, structure, and complete fund documentation for clients
+    Support fund raising activities for the fund as needed
+    Serve on Advisory Boards of portfolio entities, as required
+    Attend annual investor meetings for underlying funds
+
+Requirements and skills
+
+    Proven work experience as a Private Equity Associate or similar role
+    Organizational skills to manage several accounts at once
+    Ability to analyze lots of data to provide insights and directions to clients
+    Relevant training and/or certifications as a Private Equity Associate
+LAST-MODIFIED:20220623T110629Z
+ABC:regio
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:1st Call - Interview Invite TEST
+TRANSP:OPAQUE
+END:VEVENT
+END:VCALENDAR

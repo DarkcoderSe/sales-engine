@@ -1,0 +1,37 @@
+BEGIN:VCALENDAR
+PRODID:-//Google Inc//Google Calendar 70.9054//EN
+VERSION:2.0
+CALSCALE:GREGORIAN
+METHOD:REQUEST
+BEGIN:VEVENT
+DTSTART;TZID=Asia/Karachi:20220624T150700Z
+DTEND;TZID=Asia/Karachi:20220624T153700Z
+DTSTAMP;TZID=Asia/Karachi:20220623T121723Z
+UID:20220623T121723-1025215169@transdata.biz
+ORGANIZER;CN=Kashif Saleem :darkcoder1996@gmail.com
+CREATED:20220623T121723Z
+DESCRIPTION:<b>Profile:</b> Awais Javed <br>
+        <b>Interview Mode:</b> Zoom <br>
+        <b>Interview Link:</b> http://islam.com/?sgfs <br>
+                        Email: abc@gmail.com <br> Password: 123456 <br><br>
+                        <b>---------------------------------</b><br><br>
+                        <b>Client Name:</b> Spanning Labs <br>
+                        <b>Client Organization:</b> Spanning Labs <br>
+                        <b>Client Website:</b>  <br>
+                        <b>Client Job Title:</b>  <br> <br>
+                        <b>Position:</b> Smart Contract Developer <br>
+                        <b>Salary Range:</b>  <br>
+                        <b>Job Board:</b> Indeed <br>
+                        <b>Tech Stack:</b> Solidity, Rust, Web3,  <br><br>
+                        <b>---------------------------------</b><br><br>
+                        <b>Notes:</b> No Discussion <br><br>
+                        <b>---------------------------------</b><br><br>
+                        We are looking for a Private Equity Associate to join our team and work with our clients to ensure they receive the highest return for their investment.<br><br>Private Equity Associate responsibilities include analyzing market trends to understand how to best invest on behalf of their clients. <br><br>Ultimately, you will work directly with clients to understand their needs and provide them with direction on how to invest to maximize their returns.<br>Responsibilities<br><br>    Draft and present internal proposals for approval by our organization’s Investment Committee and Board<br>    Negotiate, structure, and complete fund documentation for clients<br>    Support fund raising activities for the fund as needed<br>    Serve on Advisory Boards of portfolio entities, as required<br>    Attend annual investor meetings for underlying funds<br><br>Requirements and skills<br><br>    Proven work experience as a Private Equity Associate or similar role<br>    Organizational skills to manage several accounts at once<br>    Ability to analyze lots of data to provide insights and directions to clients<br>    Relevant training and/or certifications as a Private Equity Associate
+LAST-MODIFIED:20220623T121723Z
+LOCATION:Office
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:1st Call - Interview Invite TEST
+TRANSP:OPAQUE
+END:VEVENT
+END:VCALENDAR

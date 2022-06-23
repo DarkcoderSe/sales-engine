@@ -33,7 +33,36 @@ class InterviewInvite extends Mailable
 		$dtend =  gmdate('Ymd\THis\Z', $meetingstamp + $meeting_duration);
 		$todaystamp = gmdate('Ymd\THis\Z');
 		$uid = date('Ymd').'T'.date('His').'-'.rand().'@transdata.biz';
-		$description = $int->lead->job_description ?? '';
+
+        $profileName = $int->profile->name ?? '';
+        $info = $int->profile->info;
+        $jobBoard = $int->lead->jobSource->name ?? '';
+        $techStack = "";
+
+        foreach ($int->lead->techs as $tech) {
+            $techStack .= "{$tech->name}, ";
+        }
+
+
+        $description = "<b>Profile:</b> {$profileName} <br>
+        <b>Interview Mode:</b> {$int->interview_mode} <br>
+        <b>Interview Link:</b> {$int->interview_link} <br>
+                        {$info} <br><br>
+                        <b>---------------------------------</b><br><br>
+                        <b>Client Name:</b> {$int->client_name} <br>
+                        <b>Client Organization:</b> {$int->client_organization} <br>
+                        <b>Client Website:</b> {$int->client_website} <br>
+                        <b>Client Job Title:</b> {$int->client_job_title} <br> <br>
+                        <b>Position:</b> {$int->position} <br>
+                        <b>Salary Range:</b> {$int->salary_range} <br>
+                        <b>Job Board:</b> {$jobBoard} <br>
+                        <b>Tech Stack:</b> {$techStack} <br><br>
+                        <b>---------------------------------</b><br><br>
+                        <b>Notes:</b> {$int->notes} <br><br>
+                        <b>---------------------------------</b><br><br>
+                        {$int->lead->job_description}";
+
+		$description = str_replace("\r\n", "<br>", $description);
 		$location = $int->location;
 		$titulo_invite = $int->title;
 		$organizer = "CN={$int->bdm->name} :{$bdPersonEmail}";
@@ -61,20 +90,15 @@ class InterviewInvite extends Mailable
 		$mail[9] = "UID:" . $uid;
 		$mail[10] = "ORGANIZER;" . $organizer;
 		$mail[11] = "CREATED:" . $todaystamp;
-		$mail[12] = "PROFILE:" . $int->profile->name ?? 'Unknown';
-		$mail[13] = "INTERVIEW_MODE:" . $int->interview_mode;
-		$mail[14] = "INTERVIEW_LINK:" . $int->interview_link;
-		$mail[15] = "NOTES:" . $int->notes;
-		$mail[16] = "DESCRIPTION:" . $description;
-		$mail[17] = "LAST-MODIFIED:" . $todaystamp;
-		$mail[18] = "LOCATION:" . $location;
-		$mail[18] = "ABC:regio";
-		$mail[19] = "SEQUENCE:0";
-		$mail[20] = "STATUS:CONFIRMED";
-		$mail[21] = "SUMMARY:" . $titulo_invite;
-		$mail[22] = "TRANSP:OPAQUE";
-		$mail[23] = "END:VEVENT";
-		$mail[24] = "END:VCALENDAR";
+		$mail[12] = "DESCRIPTION:" . $description;
+		$mail[13] = "LAST-MODIFIED:" . $todaystamp;
+		$mail[14] = "LOCATION:" . $location;
+		$mail[15] = "SEQUENCE:0";
+		$mail[16] = "STATUS:CONFIRMED";
+		$mail[17] = "SUMMARY:" . $titulo_invite;
+		$mail[18] = "TRANSP:OPAQUE";
+		$mail[19] = "END:VEVENT";
+		$mail[20] = "END:VCALENDAR";
 
 		$mail = implode("\r\n", $mail);
 		header("text/calendar");

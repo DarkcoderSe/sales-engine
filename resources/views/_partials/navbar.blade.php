@@ -31,7 +31,7 @@
                             <i class="bx bx-pyramid mr-2"></i> My Items
                         </a>
                     </li>
-                    @elseif (auth()->user()->hasRole('bdm') || auth()->user()->hasRole('superadmin') || auth()->user()->hasRole('developer'))
+                    @elseif (auth()->user()->hasRole('bdm') || auth()->user()->hasRole('super-admin') || auth()->user()->hasRole('developer'))
                     <li class="nav-item">
                         <a href="{{ route('sales-engine.create') }}" class="nav-link">
                             <i class='bx bx-plus-circle mr-2'></i> Add Item

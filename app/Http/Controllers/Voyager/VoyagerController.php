@@ -48,6 +48,7 @@ class VoyagerController extends BaseVoyagerController
 
         // CHARTS TOTAL
         $_chartTotal = clone $bdmLeadBaseQuery;
+        $_chartTotal = $_chartTotal->where('status', 0);
         $_chartTotal = $this->chartReadyLeads($_chartTotal);
 
         // CHARTS HIRED
@@ -117,7 +118,19 @@ class VoyagerController extends BaseVoyagerController
     {
         $period = CarbonPeriod::create($from, $to);
         // Convert the period to an array of dates
-        $dates = $period->toArray();
+        $period = $period->toArray();
+
+        $dates = collect($period)
+            ->filter(function($item) {
+                if ($item->dayOfWeek !=0 && $item->dayOfWeek != 6) {
+                    return $item;
+                }
+                else return false;
+        });
+
+        $dates = $dates->values()->all();
+        // dd($dates);
+
         return $dates;
     }
 

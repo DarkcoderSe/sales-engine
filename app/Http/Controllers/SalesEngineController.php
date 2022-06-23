@@ -352,6 +352,9 @@ class SalesEngineController extends Controller
         $bdmLead = BdmLead::find($leadId);
         $techs = Technology::all();
 
+        $int = InterviewModel::where('bdm_lead_id', $leadId)->get()->last();
+        // dd($int);
+
         $users = User::with('role')
                 ->whereHas('role', function($q) {
                     return $q->whereIn('name', ['super-admin', 'bdm']);
@@ -362,7 +365,8 @@ class SalesEngineController extends Controller
             'developers' => $developers,
             'profiles' => $profiles,
             'users' => $users,
-            'techs' => $techs
+            'techs' => $techs,
+            'int' => $int
         ]);
     }
 
@@ -387,7 +391,7 @@ class SalesEngineController extends Controller
             $interview->client_name = $request->get('client_name');
             $interview->client_organization = $request->get('client_organization');
             $interview->position = $request->get('position');
-            $interview->salary_range = $request->get('salary_name');
+            $interview->salary_range = $request->get('salary_range');
             $interview->notes = $request->get('notes');
             $interview->receiver_id = $dev->id;
             $interview->profile_id = $request->get('profile');
@@ -403,11 +407,12 @@ class SalesEngineController extends Controller
             }
 
         } catch (\Throwable $th) {
-            dd($th);
+            // dd($th);
             Toastr::error('Email Invitation failed due to some error!');
         }
 
-        return "Email sent!";
+        Toastr::success("Invite for Interview has been sent to user");
+        return redirect()->back();
 
     }
 

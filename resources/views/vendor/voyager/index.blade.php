@@ -136,6 +136,19 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
+                            {{-- <h4 class="card-title mb-4">Column with Data Labels</h4> --}}
+
+                            <div id="column_chart_datalabel" class="apex-charts" dir="ltr"></div>
+                        </div>
+                    </div><!--end card-->
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
                             {{-- <h4 class="card-title mb-4">Dashed Line</h4> --}}
 
                             <div id="line_chart_dashed" class="apex-charts" dir="ltr"></div>
@@ -143,6 +156,7 @@
                     </div><!--end card-->
                 </div>
             </div>
+
 
         </div>
     </div>
@@ -183,7 +197,7 @@
             dashArray: [0, 8, 5, 5]
         },
         series: [{
-            name: "Total Leads",
+            name: "Prospect",
             data: @json($ct_total)
         }, {
             name: "Rejected",
@@ -241,5 +255,105 @@
     };
     (chart = new ApexCharts(document.querySelector("#line_chart_dashed"), options)).render();
 
+    options = {
+        chart: {
+            height: 350,
+            type: "bar",
+            toolbar: {
+                show: !1
+            }
+        },
+        plotOptions: {
+            bar: {
+                dataLabels: {
+                    position: "top"
+                }
+            }
+        },
+        dataLabels: {
+            enabled: !0,
+            formatter: function(e) {
+                return e
+            },
+            offsetY: -20,
+            style: {
+                fontSize: "12px",
+                colors: ["#304758"]
+            }
+        },
+        series: [{
+            name: "Prospect",
+            data: @json($ct_total)
+        }],
+        colors: ["#556ee6"],
+        grid: {
+            borderColor: "#f1f1f1"
+        },
+        xaxis: {
+            categories: @json($period),
+            position: "top",
+            labels: {
+                offsetY: -18
+            },
+            axisBorder: {
+                show: !1
+            },
+            axisTicks: {
+                show: !1
+            },
+            crosshairs: {
+                fill: {
+                    type: "gradient",
+                    gradient: {
+                        colorFrom: "#D8E3F0",
+                        colorTo: "#BED1E6",
+                        stops: [0, 100],
+                        opacityFrom: .4,
+                        opacityTo: .5
+                    }
+                }
+            },
+            tooltip: {
+                enabled: !0,
+                offsetY: -35
+            }
+        },
+        fill: {
+            gradient: {
+                shade: "light",
+                type: "horizontal",
+                shadeIntensity: .25,
+                gradientToColors: void 0,
+                inverseColors: !0,
+                opacityFrom: 1,
+                opacityTo: 1,
+                stops: [50, 0, 100, 100]
+            }
+        },
+        yaxis: {
+            axisBorder: {
+                show: !1
+            },
+            axisTicks: {
+                show: !1
+            },
+            labels: {
+                show: !1,
+                formatter: function(e) {
+                    return e
+                }
+            }
+        },
+        title: {
+            text: "Prospect (Leads)",
+            floating: !0,
+            offsetY: 320,
+            align: "center",
+            style: {
+                color: "#444"
+            }
+        }
+    };
+    (chart = new ApexCharts(document.querySelector("#column_chart_datalabel"), options)).render();
 </script>
 @endpush
