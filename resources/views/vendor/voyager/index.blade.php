@@ -43,7 +43,7 @@
                 $baseUrl = URL::to('/');
                 $from = request()->get('from');
                 $to = request()->get('to');
-                $bdm = request()->get('bdm');
+                $bdm = request()->get('bdm') ?? '-1';
 
                 $urlPattern = "{$baseUrl}/sales-engine/reports?query=&from={$from}&to={$to}&profile=-1&phase=-1&technology=-1&bdm={$bdm}&job_source=-1&developer=-1";
             @endphp
