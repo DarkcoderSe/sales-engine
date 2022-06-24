@@ -1,7 +1,7 @@
 @extends('voyager::master')
 
 @section('content')
-    @if (auth()->user()->hasRole('super-admin') || auth()->user()->hasRole('developer'))
+    @if (auth()->user()->hasRole('super-admin') || auth()->user()->hasRole('developer') || auth()->user()->hasRole('bdm-admin'))
     <div class="page-content">
         <div class="container-fluid">
 
@@ -408,7 +408,14 @@
             }
         },
         dataLabels: {
-            enabled: !1
+            enabled: !0,
+            formatter: function(e) {
+                return e
+            },
+            offsetY: 0,
+            style: {
+                fontSize: "12px"
+            }
         },
         series: [{
             name: "Prospect",
