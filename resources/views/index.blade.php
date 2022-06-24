@@ -53,7 +53,7 @@
                         <div class="col-md-5 text-center pt-4 mt-4">
             <h3>Lead Generation System</h3>
                         </div></div></div>
-            @elseif (auth()->user()->hasRole('bdm'))
+            @elseif (auth()->user()->hasRole('bdm') || auth()->user()->hasRole('bdm-admin') || auth()->user()->hasRole('super-admin') || auth()->user()->hasRole('developer'))
 
                 <div class="row justify-content-center">
                     <div class="col-12 col-md-12 pb-4 mb-4">
