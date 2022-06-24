@@ -36,7 +36,7 @@ class VoyagerController extends BaseVoyagerController
                 }
             ])
             ->whereHas('role', function($q) {
-                return $q->where('name', 'bdm');
+                return $q->whereBetween('name', ['bdm', 'bdm-admin']);
             })
             ->orderBy('chart_order')
             ->get();
