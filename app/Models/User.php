@@ -46,6 +46,26 @@ class User extends \TCG\Voyager\Models\User
         return $this->hasMany(Lead::class, 'added_by')->where('created_at', '>', $dt->startOfDay());
     }
 
+    public function totalBdmLeads()
+    {
+        return $this->hasMany(BdmLead::class, 'user_id');
+    }
+
+    public function prospectBdmLeads()
+    {
+        return $this->hasMany(BdmLead::class, 'user_id')->where('status', 0);
+    }
+
+    public function warmLeadBdmLeads()
+    {
+        return $this->hasMany(BdmLead::class, 'user_id')->where('status', 1);
+    }
+
+    public function rejectedBdmLeads()
+    {
+        return $this->hasMany(BdmLead::class, 'user_id')->where('status', 4);
+    }
+
     public function rolex()
     {
         return $this->belongsTo(Role::class, 'role_id');

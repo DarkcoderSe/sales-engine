@@ -131,9 +131,23 @@
             </div>
             <!-- end row -->
 
-
             <div class="row">
                 <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title mb-4 float-sm-left">Leads</h4>
+                            <div class="float-sm-right">
+
+                            </div>
+                            <div class="clearfix"></div>
+                            <div id="stacked-column-chart" class="apex-charts" dir="ltr"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
                     <div class="card">
                         <div class="card-body">
                             {{-- <h4 class="card-title mb-4">Column with Data Labels</h4> --}}
@@ -142,11 +156,7 @@
                         </div>
                     </div><!--end card-->
                 </div>
-            </div>
-
-
-            <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-6">
                     <div class="card">
                         <div class="card-body">
                             {{-- <h4 class="card-title mb-4">Dashed Line</h4> --}}
@@ -291,9 +301,9 @@
         },
         xaxis: {
             categories: @json($period),
-            position: "top",
+            position: "bottom",
             labels: {
-                offsetY: -18
+                offsetY: 2
             },
             axisBorder: {
                 show: !1
@@ -347,7 +357,7 @@
         title: {
             text: "Prospect (Leads)",
             floating: !0,
-            offsetY: 320,
+            offsetY: 330,
             align: "center",
             style: {
                 color: "#444"
@@ -355,5 +365,54 @@
         }
     };
     (chart = new ApexCharts(document.querySelector("#column_chart_datalabel"), options)).render();
+
+
+    // main chart
+    var options = {
+        chart: {
+            height: 359,
+            type: "bar",
+            stacked: !0,
+            toolbar: {
+                show: !1
+            },
+            zoom: {
+                enabled: !0
+            }
+        },
+        plotOptions: {
+            bar: {
+                horizontal: !1,
+                columnWidth: "15%",
+                endingShape: "rounded"
+            }
+        },
+        dataLabels: {
+            enabled: !1
+        },
+        series: [{
+            name: "Prospect",
+            data: @json($bdms->pluck('prospect_bdm_leads_count'))
+        }, {
+            name: "Warm Leads",
+            data: @json($bdms->pluck('warm_lead_bdm_leads_count'))
+        }, {
+            name: "Rejected",
+            data: @json($bdms->pluck('rejected_bdm_leads_count'))
+        }],
+        xaxis: {
+            categories: @json($bdms->pluck('name'))
+        },
+        colors: ["#556ee6", "#f1b44c", "#ff0000"],
+        legend: {
+            position: "bottom"
+        },
+        fill: {
+            opacity: 1
+        }
+    },
+    chart = new ApexCharts(document.querySelector("#stacked-column-chart"), options);
+    chart.render();
+
 </script>
 @endpush

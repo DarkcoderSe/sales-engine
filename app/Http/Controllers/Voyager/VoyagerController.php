@@ -21,9 +21,15 @@ class VoyagerController extends BaseVoyagerController
     {
         $request = request();
         $bdms = User::with('role')
+            ->withCount(['prospectBdmLeads', 'warmLeadBdmLeads', 'rejectedBdmLeads'])
             ->whereHas('role', function($q) {
                 return $q->where('name', 'bdm');
-            })->get();
+            })
+            ->get();
+
+        // dd($bdms);
+        // $bdmNames = $bdms->pluck('name');
+        // dd($bdmNames);
 
         $bdmLeadBaseQuery = BdmLead::query();
 
@@ -67,7 +73,7 @@ class VoyagerController extends BaseVoyagerController
         $_chartRejected = $this->chartReadyLeads($_chartRejected);
 
         $period = collect($period)->map(function($item){
-            return Carbon::create($item)->format('Y-m-d');
+            return Carbon::create($item)->format('M-d');
         });
 
         foreach ($period as $key => $date) {
