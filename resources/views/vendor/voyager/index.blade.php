@@ -39,92 +39,112 @@
                 </div>
             </div>
 
+            @php
+                $baseUrl = URL::to('/');
+                $from = request()->get('from');
+                $to = request()->get('to');
+                $bdm = request()->get('bdm');
+
+                $urlPattern = "{$baseUrl}/sales-engine/reports?query=&from={$from}&to={$to}&profile=-1&phase=-1&technology=-1&bdm={$bdm}&job_source=-1&developer=-1";
+            @endphp
             <h4>BDM Leads</h4>
             <div class="row">
 
                 <div class="col-md-2">
-                    <div class="card mini-stats-wid">
-                        <div class="card-body" style="background-color: rgba(0,0,255, 0.1);">
-                            <div class="media">
-                                <div class="media-body">
-                                    <p class="text-muted font-weight-medium">Total</p>
-                                    <h4 class="mb-0">{{ $_countBdmLeads['total'] }}</h4>
+                    <a target="_blank" href="{{ "{$urlPattern}&status=-1" }}">
+                        <div class="card mini-stats-wid">
+                            <div class="card-body" style="background-color: rgba(0,0,255, 0.1);">
+                                <div class="media">
+                                    <div class="media-body">
+                                        <p class="text-muted font-weight-medium">Total</p>
+                                        <h4 class="mb-0">{{ $_countBdmLeads['total'] }}</h4>
 
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
 
                 <div class="col-md-2">
-                    <div class="card mini-stats-wid">
-                        <div class="card-body">
-                            <div class="media">
-                                <div class="media-body">
-                                    <p class="text-muted font-weight-medium">Prospects</p>
-                                    <h4 class="mb-0">{{ $_countBdmLeads['prospect'] }}</h4>
+                    <a target="_blank" href="{{ "{$urlPattern}&status=0" }}">
+                        <div class="card mini-stats-wid">
+                            <div class="card-body">
+                                <div class="media">
+                                    <div class="media-body">
+                                        <p class="text-muted font-weight-medium">Prospects</p>
+                                        <h4 class="mb-0">{{ $_countBdmLeads['prospect'] }}</h4>
 
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
 
                 <div class="col-md-2">
-                    <div class="card mini-stats-wid">
-                        <div class="card-body">
-                            <div class="media">
-                                <div class="media-body">
-                                    <p class="text-muted font-weight-medium">Warm Leads</p>
-                                    <h4 class="mb-0">{{ $_countBdmLeads['warmlead'] }}</h4>
+                    <a target="_blank" href="{{ "{$urlPattern}&status=1" }}">
+                        <div class="card mini-stats-wid">
+                            <div class="card-body">
+                                <div class="media">
+                                    <div class="media-body">
+                                        <p class="text-muted font-weight-medium">Warm Leads</p>
+                                        <h4 class="mb-0">{{ $_countBdmLeads['warmlead'] }}</h4>
 
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
 
                 <div class="col-md-2">
-                    <div class="card mini-stats-wid">
-                        <div class="card-body">
-                            <div class="media">
-                                <div class="media-body">
-                                    <p class="text-muted font-weight-medium">Cold Leads</p>
-                                    <h4 class="mb-0">{{ $_countBdmLeads['coldlead'] }}</h4>
+                    <a target="_blank" href="{{ "{$urlPattern}&status=2" }}">
+                        <div class="card mini-stats-wid">
+                            <div class="card-body">
+                                <div class="media">
+                                    <div class="media-body">
+                                        <p class="text-muted font-weight-medium">Cold Leads</p>
+                                        <h4 class="mb-0">{{ $_countBdmLeads['coldlead'] }}</h4>
 
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
 
                 <div class="col-md-2">
-                    <div class="card mini-stats-wid">
-                        <div class="card-body" style="background-color: rgba(0,255,0, 0.1);">
-                            <div class="media">
-                                <div class="media-body">
-                                    <p class="text-muted font-weight-medium">Hired</p>
-                                    <h4 class="mb-0">{{ $_countBdmLeads['hired'] }}</h4>
+                    <a target="_blank" href="{{ "{$urlPattern}&status=3" }}">
+                        <div class="card mini-stats-wid">
+                            <div class="card-body" style="background-color: rgba(0,255,0, 0.1);">
+                                <div class="media">
+                                    <div class="media-body">
+                                        <p class="text-muted font-weight-medium">Hired</p>
+                                        <h4 class="mb-0">{{ $_countBdmLeads['hired'] }}</h4>
 
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
 
 
                 <div class="col-md-2">
-                    <div class="card mini-stats-wid">
-                        <div class="card-body" style="background-color: rgba(255,0,0, 0.1);">
-                            <div class="media">
-                                <div class="media-body">
-                                    <p class="text-muted font-weight-medium">Rejected</p>
-                                    <h4 class="mb-0">{{ $_countBdmLeads['rejected'] }}</h4>
+                    <a target="_blank" href="{{ "{$urlPattern}&status=4" }}">
+                        <div class="card mini-stats-wid">
+                            <div class="card-body" style="background-color: rgba(255,0,0, 0.1);">
+                                <div class="media">
+                                    <div class="media-body">
+                                        <p class="text-muted font-weight-medium">Rejected</p>
+                                        <h4 class="mb-0">{{ $_countBdmLeads['rejected'] }}</h4>
 
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
 
 
