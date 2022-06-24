@@ -20,16 +20,27 @@ class VoyagerController extends BaseVoyagerController
     public function index()
     {
         $request = request();
-        $bdms = User::with('role')
-            ->withCount(['prospectBdmLeads', 'warmLeadBdmLeads', 'rejectedBdmLeads'])
+        $toDate = $request->get('to') ?? Carbon::now();
+        $fromDate = $request->get('from') ?? Carbon::create('2022-05-21');
+
+        $bdms = User::with(['role'])
+            ->withCount([
+                'prospectBdmLeads' => function($q) use ($fromDate, $toDate) {
+                    $q->whereBetween('created_at', [$fromDate, $toDate]);
+                },
+                'warmLeadBdmLeads' => function($q) use ($fromDate, $toDate) {
+                    $q->whereBetween('created_at', [$fromDate, $toDate]);
+                },
+                'rejectedBdmLeads' => function($q) use ($fromDate, $toDate) {
+                    $q->whereBetween('created_at', [$fromDate, $toDate]);
+                }
+            ])
             ->whereHas('role', function($q) {
                 return $q->where('name', 'bdm');
             })
+            ->orderBy('chart_order')
             ->get();
 
-        // dd($bdms);
-        // $bdmNames = $bdms->pluck('name');
-        // dd($bdmNames);
 
         $bdmLeadBaseQuery = BdmLead::query();
 
@@ -73,7 +84,7 @@ class VoyagerController extends BaseVoyagerController
         $_chartRejected = $this->chartReadyLeads($_chartRejected);
 
         $period = collect($period)->map(function($item){
-            return Carbon::create($item)->format('M-d');
+            return Carbon::create($item)->format('Y-m-d');
         });
 
         foreach ($period as $key => $date) {
@@ -84,6 +95,8 @@ class VoyagerController extends BaseVoyagerController
             $ct_warmlead[$key] = $this->getLeads($_chartWarmLead, $date);
 
         }
+
+        // dd($ct_total, $ct_rejected);
 
         $_totalBaseQuery = clone $bdmLeadBaseQuery;
         $_prospectBaseQuery = clone $bdmLeadBaseQuery;
@@ -98,6 +111,8 @@ class VoyagerController extends BaseVoyagerController
         $_countBdmLeads['coldlead'] = $_coldLeadBaseQuery->where('status', 2)->count();
         $_countBdmLeads['hired'] = $_hiredBaseQuery->where('status', 3)->count();
         $_countBdmLeads['rejected'] = $_rejectedBaseQuery->where('status', 4)->count();
+
+        // dd($period);
 
         return Voyager::view('voyager::index')->with([
             '_countBdmLeads' => $_countBdmLeads,

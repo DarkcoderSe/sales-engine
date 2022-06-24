@@ -186,7 +186,7 @@
 
 @push('javascript')
 <script>
-    options = {
+    options_dash = {
         chart: {
             height: 380,
             type: "line",
@@ -263,9 +263,9 @@
             borderColor: "#f1f1f1"
         }
     };
-    (chart = new ApexCharts(document.querySelector("#line_chart_dashed"), options)).render();
+    (chart_dash = new ApexCharts(document.querySelector("#line_chart_dashed"), options_dash)).render();
 
-    options = {
+    options_bar = {
         chart: {
             height: 350,
             type: "bar",
@@ -357,18 +357,18 @@
         title: {
             text: "Prospect (Leads)",
             floating: !0,
-            offsetY: 330,
+            offsetY: 0,
             align: "center",
             style: {
                 color: "#444"
             }
         }
     };
-    (chart = new ApexCharts(document.querySelector("#column_chart_datalabel"), options)).render();
+    (chart_bar = new ApexCharts(document.querySelector("#column_chart_datalabel"), options_bar)).render();
 
 
     // main chart
-    var options = {
+    var main_options = {
         chart: {
             height: 359,
             type: "bar",
@@ -411,8 +411,8 @@
             opacity: 1
         }
     },
-    chart = new ApexCharts(document.querySelector("#stacked-column-chart"), options);
-    chart.render();
+    main_chart = new ApexCharts(document.querySelector("#stacked-column-chart"), main_options);
+    main_chart.render();
 
 </script>
 @endpush
