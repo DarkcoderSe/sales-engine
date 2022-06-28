@@ -33,6 +33,12 @@
         width: 200px !important;
     }
 
+    .text-ellipsis {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
 </style>
 @endpush
 
@@ -269,8 +275,10 @@
                                 </span>
                                 @endforeach
                             </td>
-                            <td>
-                                {{ $lead->notes }}
+                            <td class="text-ellipsis" title="{{ $lead->notes }}">
+                                <span class="text-ellipsis">
+                                    {{ substr($lead->notes, 0, 30) }}...
+                                </span>
                             </td>
                         </tr>
                         @endforeach

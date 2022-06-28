@@ -400,15 +400,15 @@
                 enabled: !0
             }
         },
-        plotOptions: {
-            bar: {
-                horizontal: !1,
-                columnWidth: "15%",
-                endingShape: "rounded"
-            }
-        },
+        // plotOptions: {
+        //     bar: {
+        //         horizontal: !1,
+        //         columnWidth: "15%",
+        //         endingShape: "rounded"
+        //     }
+        // },
         dataLabels: {
-            enabled: !0,
+            enabled: !1,
             formatter: function(e) {
                 return e
             },
