@@ -23,7 +23,7 @@
                                 </select>
                             </div>
                             <div class="col-md-2">
-                                <label>Type</label>
+                                <label>Lead Type</label>
                                 <select name="lead_type" class="form-control">
                                     <option value="-1">Any</option>
                                     <option value="corporate" {{ request()->get('lead_type') == 'corporate' ? 'selected' : '' }}>Corporate</option>
@@ -52,8 +52,9 @@
                 $from = request()->get('from');
                 $to = request()->get('to');
                 $bdm = request()->get('bdm') ?? '-1';
+                $lead_type = request()->get('lead_type') ?? '-1';
 
-                $urlPattern = "{$baseUrl}/sales-engine/reports?query=&from={$from}&to={$to}&profile=-1&phase=-1&technology=-1&bdm={$bdm}&job_source=-1&developer=-1";
+                $urlPattern = "{$baseUrl}/sales-engine/reports?query=&from={$from}&to={$to}&profile=-1&phase=-1&technology=-1&bdm={$bdm}&job_source=-1&developer=-1&lead_type={$lead_type}";
             @endphp
             <h4>BDM Leads</h4>
             <div class="row">

@@ -280,6 +280,7 @@ class SalesEngineController extends Controller
         $bdm = $request->get('bdm');
         $jobSource = $request->get('job_source');
         $developer = $request->get('developer');
+        $lead_type = $request->get('lead_type');
 
         $leads = BdmLead::where('company_name', 'LIKE', "%{$query}%");
         // filters
@@ -322,6 +323,13 @@ class SalesEngineController extends Controller
                 return $q->where('developer_id', $developer);
             });
         }
+
+        if ($lead_type != -1) {
+            $leads = $leads->whereHas('jobSource', function ($q) use ($lead_type) {
+                return $q->where('type', $lead_type);
+            });
+        }
+
 
 
         if ($request->get('export') == true) {
