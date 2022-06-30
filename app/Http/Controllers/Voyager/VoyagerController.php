@@ -29,7 +29,7 @@ class VoyagerController extends BaseVoyagerController
                 'prospectBdmLeads' => function($q) use ($fromDate, $toDate, $leadType) {
                     $q->whereBetween('created_at', [$fromDate, $toDate])
                     ->whereHas('jobSource', function($q) use ($leadType) {
-                        if ($leadType != '-1') {
+                        if (!is_null($leadType) && $leadType != '-1') {
                             return $q->where('type', $leadType);
                         }
                     });
@@ -37,7 +37,7 @@ class VoyagerController extends BaseVoyagerController
                 'warmLeadBdmLeads' => function($q) use ($fromDate, $toDate, $leadType) {
                     $q->whereBetween('created_at', [$fromDate, $toDate])
                     ->whereHas('jobSource', function($q) use ($leadType) {
-                        if ($leadType != '-1') {
+                        if (!is_null($leadType) && $leadType != '-1') {
                             return $q->where('type', $leadType);
                         }
                     });
@@ -45,7 +45,7 @@ class VoyagerController extends BaseVoyagerController
                 'rejectedBdmLeads' => function($q) use ($fromDate, $toDate, $leadType) {
                     $q->whereBetween('created_at', [$fromDate, $toDate])
                     ->whereHas('jobSource', function($q) use ($leadType) {
-                        if ($leadType != '-1') {
+                        if (!is_null($leadType) && $leadType != '-1') {
                             return $q->where('type', $leadType);
                         }
                     });
