@@ -22,17 +22,33 @@ class VoyagerController extends BaseVoyagerController
         $request = request();
         $toDate = $request->get('to') ?? Carbon::now();
         $fromDate = $request->get('from') ?? Carbon::create('2022-05-21');
+        $leadType = $request->get('lead_type');
 
         $bdms = User::with(['role'])
             ->withCount([
-                'prospectBdmLeads' => function($q) use ($fromDate, $toDate) {
-                    $q->whereBetween('created_at', [$fromDate, $toDate]);
+                'prospectBdmLeads' => function($q) use ($fromDate, $toDate, $leadType) {
+                    $q->whereBetween('created_at', [$fromDate, $toDate])
+                    ->whereHas('jobSource', function($q) use ($leadType) {
+                        if ($leadType != '-1') {
+                            return $q->where('type', $leadType);
+                        }
+                    });
                 },
-                'warmLeadBdmLeads' => function($q) use ($fromDate, $toDate) {
-                    $q->whereBetween('created_at', [$fromDate, $toDate]);
+                'warmLeadBdmLeads' => function($q) use ($fromDate, $toDate, $leadType) {
+                    $q->whereBetween('created_at', [$fromDate, $toDate])
+                    ->whereHas('jobSource', function($q) use ($leadType) {
+                        if ($leadType != '-1') {
+                            return $q->where('type', $leadType);
+                        }
+                    });
                 },
-                'rejectedBdmLeads' => function($q) use ($fromDate, $toDate) {
-                    $q->whereBetween('created_at', [$fromDate, $toDate]);
+                'rejectedBdmLeads' => function($q) use ($fromDate, $toDate, $leadType) {
+                    $q->whereBetween('created_at', [$fromDate, $toDate])
+                    ->whereHas('jobSource', function($q) use ($leadType) {
+                        if ($leadType != '-1') {
+                            return $q->where('type', $leadType);
+                        }
+                    });
                 }
             ])
             ->whereHas('role', function($q) {
@@ -54,6 +70,12 @@ class VoyagerController extends BaseVoyagerController
 
         if (!is_null($request->get('bdm')) && $request->get('bdm') != -1) {
             $bdmLeadBaseQuery = $bdmLeadBaseQuery->where('user_id', $request->get('bdm'));
+        }
+
+        if (!is_null($leadType) && $leadType != -1) {
+            $bdmLeadBaseQuery = $bdmLeadBaseQuery->whereHas('jobSource', function($q) use ($leadType) {
+                return $q->where('type', $leadType);
+            });
         }
 
         $period = $this->getDates($request->get('from') ?? Carbon::create('2022-05-21'), $request->get('to') ?? Carbon::now());

@@ -22,11 +22,19 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
+                                <label>Type</label>
+                                <select name="lead_type" class="form-control">
+                                    <option value="-1">Any</option>
+                                    <option value="corporate" {{ request()->get('lead_type') == 'corporate' ? 'selected' : '' }}>Corporate</option>
+                                    <option value="individual" {{ request()->get('lead_type') == 'individual' ? 'selected' : '' }}>Individual</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
                                 <label>From</label>
                                 <input type="date" class="form-control" name="from" placeholder="From" value="{{ request()->get('from') }}">
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <label>To</label>
                                 <input type="date" name="to" placeholder="To" class="form-control" value="{{ request()->get('to') }}">
                             </div>
