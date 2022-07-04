@@ -11,10 +11,13 @@
                     {{-- <div class="card mini-stats-wid">
                         <div class="card-body"> --}}
                         <form action="{{ URL::to('admin') }}" method="get">
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <label>BD</label>
                                 <select name="bdm" class="form-control">
                                     <option value="-1">Any</option>
+                                    @php
+                                        $bdms = $bdms->sortBy('name');
+                                    @endphp
                                     @foreach ($bdms as $bdm)
                                     <option value="{{ $bdm->id }}" {{ request()->get('bdm') == $bdm->id ? 'selected' : '' }}>
                                         {{ $bdm->name }}
@@ -31,6 +34,17 @@
                                 </select>
                             </div>
                             <div class="col-md-2">
+                                <label>Job Source</label>
+                                <select name="job_source" class="form-control">
+                                    <option value="-1">Any</option>
+                                    @foreach ($jobSources as $jobSource)
+                                    <option value="{{ $jobSource->id }}" {{ request()->get('job_source') == $jobSource->id ? 'selected' : '' }}>
+                                        {{ $jobSource->name }}
+                                    </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-2">
                                 <label>From</label>
                                 <input type="date" class="form-control" name="from" placeholder="From" value="{{ request()->get('from') }}">
                             </div>
@@ -38,7 +52,7 @@
                                 <label>To</label>
                                 <input type="date" name="to" placeholder="To" class="form-control" value="{{ request()->get('to') }}">
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <button type="submit" class="btn btn-primary" style="margin-top: 27px">Filter</button>
                             </div>
                         </form>

@@ -269,6 +269,8 @@ class SalesEngineController extends Controller
                                 })
                                 ->get();
 
+        // dd($request->all());
+
         // $leads = collect([]);
         $query = $request->get('query');
         $from = $request->get('from');
@@ -280,7 +282,7 @@ class SalesEngineController extends Controller
         $bdm = $request->get('bdm');
         $jobSource = $request->get('job_source');
         $developer = $request->get('developer');
-        $lead_type = $request->get('lead_type');
+        $lead_type = $request->get('lead_type') ?? '-1';
 
         $leads = BdmLead::where('company_name', 'LIKE', "%{$query}%");
         // filters

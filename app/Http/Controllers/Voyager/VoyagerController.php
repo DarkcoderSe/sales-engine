@@ -7,6 +7,7 @@ use TCG\Voyager\Facades\Voyager;
 
 use App\Models\BdmLead;
 use App\Models\User;
+use App\Models\JobSource;
 
 use Illuminate\Http\Request;
 
@@ -23,27 +24,43 @@ class VoyagerController extends BaseVoyagerController
         $toDate = $request->get('to') ?? Carbon::now();
         $fromDate = $request->get('from') ?? Carbon::create('2022-05-21');
         $leadType = $request->get('lead_type');
+        $jobSource = $request->get('job_source');
 
         $bdms = User::with(['role'])
             ->withCount([
-                'prospectBdmLeads' => function($q) use ($fromDate, $toDate, $leadType) {
+                'prospectBdmLeads' => function($q) use ($fromDate, $toDate, $leadType, $jobSource) {
                     $q->whereBetween('created_at', [$fromDate, $toDate])
+                    ->where(function($q) use ($jobSource) {
+                        if (!is_null($jobSource) && $jobSource != '-1') {
+                            return $q->where('job_source_id', $jobSource);
+                        }
+                    })
                     ->whereHas('jobSource', function($q) use ($leadType) {
                         if (!is_null($leadType) && $leadType != '-1') {
                             return $q->where('type', $leadType);
                         }
                     });
                 },
-                'warmLeadBdmLeads' => function($q) use ($fromDate, $toDate, $leadType) {
+                'warmLeadBdmLeads' => function($q) use ($fromDate, $toDate, $leadType, $jobSource) {
                     $q->whereBetween('created_at', [$fromDate, $toDate])
+                    ->where(function($q) use ($jobSource) {
+                        if (!is_null($jobSource) && $jobSource != '-1') {
+                            return $q->where('job_source_id', $jobSource);
+                        }
+                    })
                     ->whereHas('jobSource', function($q) use ($leadType) {
                         if (!is_null($leadType) && $leadType != '-1') {
                             return $q->where('type', $leadType);
                         }
                     });
                 },
-                'rejectedBdmLeads' => function($q) use ($fromDate, $toDate, $leadType) {
+                'rejectedBdmLeads' => function($q) use ($fromDate, $toDate, $leadType, $jobSource) {
                     $q->whereBetween('created_at', [$fromDate, $toDate])
+                    ->where(function($q) use ($jobSource) {
+                        if (!is_null($jobSource) && $jobSource != '-1') {
+                            return $q->where('job_source_id', $jobSource);
+                        }
+                    })
                     ->whereHas('jobSource', function($q) use ($leadType) {
                         if (!is_null($leadType) && $leadType != '-1') {
                             return $q->where('type', $leadType);
@@ -72,6 +89,10 @@ class VoyagerController extends BaseVoyagerController
             $bdmLeadBaseQuery = $bdmLeadBaseQuery->where('user_id', $request->get('bdm'));
         }
 
+        if (!is_null($request->get('job_source')) && $request->get('job_source') != -1) {
+            $bdmLeadBaseQuery = $bdmLeadBaseQuery->where('job_source_id', $request->get('job_source'));
+        }
+
         if (!is_null($leadType) && $leadType != -1) {
             $bdmLeadBaseQuery = $bdmLeadBaseQuery->whereHas('jobSource', function($q) use ($leadType) {
                 return $q->where('type', $leadType);
@@ -83,6 +104,7 @@ class VoyagerController extends BaseVoyagerController
         $ct_hired = [];
         $ct_rejected = [];
         $ct_warmlead = [];
+        $ct_successLead = [];
 
 
         // CHARTS TOTAL
@@ -116,6 +138,7 @@ class VoyagerController extends BaseVoyagerController
             $ct_rejected[$key] = $this->getLeads($_chartRejected, $date);
             $ct_warmlead[$key] = $this->getLeads($_chartWarmLead, $date);
 
+            $ct_successLead[$key] = ($ct_warmlead[$key] / $ct_total[$key]) * 100;
         }
 
         // dd($ct_total, $ct_rejected);
@@ -135,6 +158,7 @@ class VoyagerController extends BaseVoyagerController
         $_countBdmLeads['rejected'] = $_rejectedBaseQuery->where('status', 4)->count();
 
         // dd($period);
+        $jobSources = JobSource::orderBy('name')->get();
 
         return Voyager::view('voyager::index')->with([
             '_countBdmLeads' => $_countBdmLeads,
@@ -143,7 +167,8 @@ class VoyagerController extends BaseVoyagerController
             'ct_total' => $ct_total,
             'ct_hired' => $ct_hired,
             'ct_rejected' => $ct_rejected,
-            'ct_warmlead' => $ct_warmlead
+            'ct_warmlead' => $ct_warmlead,
+            'jobSources' => $jobSources
         ]);
     }
 
