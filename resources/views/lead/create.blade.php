@@ -192,6 +192,7 @@
 
                         <div class="col-md-4">
                             <div class="form-group">
+                                {{-- Elixir, Flutter, React, Java, .NET etc --}}
                                 <label>Job Type <span class="text-danger">*</span></label>
                                 <select name="job_type" class="custom-select">
                                     <option value="full-stack">Full Stack</option>
@@ -205,6 +206,11 @@
                                     <option value="machine-learning">Machine Learning</option>
                                     <option value="blockchain">BlockChain</option>
                                     <option value="python">Python</option>
+                                    <option value="elixir">Elixir</option>
+                                    <option value="flutter">Flutter</option>
+                                    <option value="react-native">React Native</option>
+                                    <option value="java">Java</option>
+                                    <option value="dot-net">.NET</option>
                                 </select>
 
                                 @if ($errors->any('job_type'))
