@@ -279,7 +279,7 @@ class SalesEngineController extends Controller
         $technology = $request->get('technology');
         $phase = $request->get('phase');
         $status = $request->get('status');
-        $bdm = $request->get('bdm');
+        $bdm = $request->get('bdm') ?? [];
         $jobSource = $request->get('job_source');
         $developer = $request->get('developer');
         $lead_type = $request->get('lead_type') ?? '-1';
@@ -306,8 +306,8 @@ class SalesEngineController extends Controller
             $leads = $leads->where('status', $status);
         }
 
-        if ($bdm != -1) {
-            $leads = $leads->where('user_id', $bdm);
+        if (count($bdm) > 0) {
+            $leads = $leads->whereIn('user_id', $bdm);
         }
 
         if ($jobSource != -1) {

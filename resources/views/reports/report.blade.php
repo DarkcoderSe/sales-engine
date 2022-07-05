@@ -152,10 +152,11 @@
                         <div class="col-md-4">
                             <div class="form-group">
                             <label>BD </label>
-                            <select name="bdm" class="form-control">
-                                <option value="-1">Any</option>
+                            <select name="bdm[]" class="form-control" multiple>
                                 @foreach ($bdms as $bdm)
-                                <option value="{{ $bdm->id }}" {{ request()->get('bdm') == $bdm->id ? 'selected' : '' }}>
+                                <option value="{{ $bdm->id }}"
+                                    {{ is_array(request()->get('bdm')) ? (in_array($bdm->id, request()->get('bdm')) ? 'selected' : '') : '' }}
+                                    >
                                     {{ $bdm->name }}
                                 </option>
                                 @endforeach

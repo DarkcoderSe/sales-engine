@@ -14,7 +14,6 @@
                             <div class="col-md-2">
                                 <label>BD</label>
                                 <select name="bdm[]" class="form-control" multiple>
-                                    <option value="-1">Any</option>
                                     @foreach ($bdms as $bdm)
                                     <option value="{{ $bdm->id }}"
                                         {{ is_array(request()->get('bdm')) ? (in_array($bdm->id, request()->get('bdm')) ? 'selected' : '') : '' }}
