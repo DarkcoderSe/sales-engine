@@ -138,7 +138,7 @@ class VoyagerController extends BaseVoyagerController
             $ct_rejected[$key] = $this->getLeads($_chartRejected, $date);
             $ct_warmlead[$key] = $this->getLeads($_chartWarmLead, $date);
 
-            $ct_successLead[$key] = ($ct_warmlead[$key] / $ct_total[$key]) * 100;
+            // $ct_successLead[$key] = ($ct_warmlead[$key] / $ct_total[$key]) * 100;
         }
 
         // dd($ct_total, $ct_rejected);
