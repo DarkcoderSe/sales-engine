@@ -15,9 +15,6 @@
                                 <label>BD</label>
                                 <select name="bdm" class="form-control">
                                     <option value="-1">Any</option>
-                                    @php
-                                        $bdms = $bdms->sortBy('name');
-                                    @endphp
                                     @foreach ($bdms as $bdm)
                                     <option value="{{ $bdm->id }}" {{ request()->get('bdm') == $bdm->id ? 'selected' : '' }}>
                                         {{ $bdm->name }}
