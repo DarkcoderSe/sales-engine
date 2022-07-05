@@ -17,7 +17,7 @@
                                     <option value="-1">Any</option>
                                     @foreach ($bdms as $bdm)
                                     <option value="{{ $bdm->id }}"
-                                        {{ in_array($bdm->id, request()->get('bdm')) ? 'selected' : '' }}
+                                        {{ is_array(request()->get('bdm')) ? (in_array($bdm->id, request()->get('bdm')) ? 'selected' : '') : '' }}
                                         >
                                         {{ $bdm->name }}
                                     </option>
@@ -67,7 +67,7 @@
                 $lead_type = request()->get('lead_type') ?? '-1';
 
                 $bdmList = "";
-                if (count(request()->get('bdm')) > 0) {
+                if (is_array(request()->get('bdm')) && count(request()->get('bdm')) > 0) {
                     foreach (request()->get('bdm') as $bd) {
                         $bdmList .= "bdm[]={$bd}&";
                     }
