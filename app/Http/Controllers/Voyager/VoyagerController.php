@@ -21,6 +21,9 @@ class VoyagerController extends BaseVoyagerController
     public function index()
     {
         $request = request();
+        // dd($request->all());
+
+
         $toDate = $request->get('to') ?? Carbon::now();
         $fromDate = $request->get('from') ?? Carbon::create('2022-05-21');
         $leadType = $request->get('lead_type');
@@ -86,7 +89,7 @@ class VoyagerController extends BaseVoyagerController
         }
 
         if (!is_null($request->get('bdm')) && $request->get('bdm') != -1) {
-            $bdmLeadBaseQuery = $bdmLeadBaseQuery->where('user_id', $request->get('bdm'));
+            $bdmLeadBaseQuery = $bdmLeadBaseQuery->whereIn('user_id', $request->get('bdm'));
         }
 
         if (!is_null($request->get('job_source')) && $request->get('job_source') != -1) {

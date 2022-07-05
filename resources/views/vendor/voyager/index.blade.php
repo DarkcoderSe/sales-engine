@@ -13,10 +13,12 @@
                         <form action="{{ URL::to('admin') }}" method="get">
                             <div class="col-md-2">
                                 <label>BD</label>
-                                <select name="bdm" class="form-control">
+                                <select name="bdm[]" class="form-control" multiple>
                                     <option value="-1">Any</option>
                                     @foreach ($bdms as $bdm)
-                                    <option value="{{ $bdm->id }}" {{ request()->get('bdm') == $bdm->id ? 'selected' : '' }}>
+                                    <option value="{{ $bdm->id }}"
+                                        {{ in_array($bdm->id, request()->get('bdm')) ? 'selected' : '' }}
+                                        >
                                         {{ $bdm->name }}
                                     </option>
                                     @endforeach
@@ -62,10 +64,20 @@
                 $baseUrl = URL::to('/');
                 $from = request()->get('from');
                 $to = request()->get('to');
-                $bdm = request()->get('bdm') ?? '-1';
                 $lead_type = request()->get('lead_type') ?? '-1';
 
-                $urlPattern = "{$baseUrl}/sales-engine/reports?query=&from={$from}&to={$to}&profile=-1&phase=-1&technology=-1&bdm={$bdm}&job_source=-1&developer=-1&lead_type={$lead_type}";
+                $bdmList = "";
+                if (count(request()->get('bdm')) > 0) {
+                    foreach (request()->get('bdm') as $bd) {
+                        $bdmList .= "bdm[]={$bd}&";
+                    }
+                }
+                else {
+                    $bdmList = "-1&";
+                }
+
+
+                $urlPattern = "{$baseUrl}/sales-engine/reports?query=&from={$from}&to={$to}&profile=-1&phase=-1&technology=-1&{$bdmList}job_source=-1&developer=-1&lead_type={$lead_type}";
             @endphp
             <h4>BDM Leads</h4>
             <div class="row">
@@ -223,9 +235,31 @@
     @endif
 @stop
 
+@php
+    $ct_total_dashed = collect($ct_total);
+    $ct_rejected_dashed = collect($ct_rejected);
+    $ct_hired_dashed = collect($ct_hired);
+    $ct_warmlead_dashed = collect($ct_warmlead);
+    $period_dashed = collect($period);
+
+    $ct_total_dashed->pop();
+    $ct_rejected_dashed->pop();
+    $ct_hired_dashed->pop();
+    $ct_warmlead_dashed->pop();
+    $period_dashed->pop();
+    // dd($ct_total_dashed);
+
+@endphp
 
 @push('javascript')
 <script>
+
+
+    $(document).ready(function () {
+        $('select').select2();
+        $(".bs-select").select2('destroy');
+    });
+
     options_dash = {
         chart: {
             height: 380,
@@ -248,16 +282,16 @@
         },
         series: [{
             name: "Prospect",
-            data: @json($ct_total)
+            data: @json($ct_total_dashed)
         }, {
             name: "Rejected",
-            data: @json($ct_rejected)
+            data: @json($ct_rejected_dashed)
         }, {
             name: "Hired",
-            data: @json($ct_hired)
+            data: @json($ct_hired_dashed)
         }, {
             name: "Warm Lead",
-            data: @json($ct_warmlead)
+            data: @json($ct_warmlead_dashed)
         }],
         title: {
             text: "Lead Statistics",
@@ -270,7 +304,7 @@
             }
         },
         xaxis: {
-            categories: @json($period)
+            categories: @json($period_dashed)
         },
         tooltip: {
             y: [{

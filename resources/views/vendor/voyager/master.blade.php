@@ -20,6 +20,7 @@
 
 
     <!-- App CSS -->
+
     <link rel="stylesheet" href="{{ voyager_asset('css/app.css') }}">
 
     @yield('css')
@@ -43,11 +44,17 @@
         .voyager .breadcrumb a{
             color:{{ config('voyager.primary_color','#22A7F0') }};
         }
+
+        .select2-container .select2-selection--single {
+            height: 35px !important;
+        }
     </style>
 
     @if(!empty(config('voyager.additional_css')))<!-- Additional CSS -->
         @foreach(config('voyager.additional_css') as $css)<link rel="stylesheet" type="text/css" href="{{ asset($css) }}">@endforeach
     @endif
+
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
 
     @yield('head')
     @stack('style')
@@ -149,6 +156,8 @@ if (\Illuminate\Support\Str::startsWith(Auth::user()->avatar, 'http://') || \Ill
 
 <!-- apexcharts -->
 <script src="{{URL::to('assets/libs/apexcharts/apexcharts.min.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 {{-- <script src="{{URL::to('assets/js/pages/dashboard.init.js')}}"></script> --}}
 @stack('javascript')
 
